@@ -1,116 +1,136 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="">
 <head>
-<title>ECSHOP Menu</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="__PUBLIC__/Admin/Styles/general.css" rel="stylesheet" type="text/css" />
+    <title>ECSHOP Menu</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="__PUBLIC__/Admin/Styles/general.css" rel="stylesheet" type="text/css"/>
 
-<style type="text/css">
-body {
-  background: #80BDCB;
-}
-#tabbar-div {
-  background:#278296;
-  padding-left:10px;
-  height:21px;
-  padding-top:0;
-}
-#tabbar-div p {
-  margin:1px 0 0 0;
-}
-.tab-front {
-  background:#80BDCB;
-  line-height:20px;
-  font-weight:bold;
-  padding:4px 15px 4px 18px;
-  border-right:2px solid #335b64;
-  cursor:pointer;
-}
-.tab-back {
-  color:#F4FAFB;
-  line-height:20px;
-  padding:4px 15px 4px 18px;
-  cursor:pointer;
-}
-.tab-hover {
-  color:#F4FAFB;
-  line-height:20px;
-  padding:4px 15px 4px 18px;
-  cursor:pointer;
-  background:#2F9DB5;
-}
-#top-div
-{
-  padding:3px 0 2px;
-  background:#BBDDE5;
-  margin:5px;
-  text-align:center;
-}
-#main-div {
-  border:1px solid #345C65;
-  padding:5px;
-  margin:5px;
-  background:#FFF;
-}
-#menu-list {
-  padding:0;
-  margin:0;
-}
-#menu-list ul {
-  padding:0;
-  margin:0;
-  list-style-type: none;
-  color:#335B64;
-}
-#menu-list li {
-  padding-left:16px;
-  line-height:16px;
-  cursor:pointer;
-}
-#main-div a:visited, #menu-list a:link, #menu-list a:hover {
-  color:#335B64;
-  text-decoration:none;
-}
-#menu-list a:active {
-  color:#EB8A3D;
-}
-.explode {
-  background:url(__PUBLIC__/Admin/Images/menu_minus.gif) no-repeat 0 3px;
-  font-weight:bold;
-}
-.collapse {
-  background:url(__PUBLIC__/Admin/Images/menu_plus.gif) no-repeat 0 3px;
-  font-weight:bold;
-}
-.menu-item {
-  background:url(__PUBLIC__/Admin/Images/menu_arrow.gif) no-repeat 0 3px;
-  font-weight:normal;
-}
-#help-title {
-  font-size:14px;
-  color:#000080;
-  margin:5px 0;
-  padding:0;
-}
-#help-content {
-  margin:0;
-  padding:0;
-}
-.tips {
-  color:#CC0000;
-}
-.link {
-  color:#000099;
-}
-</style>
+    <style type="text/css">
+        body {
+            background: #80BDCB;
+        }
+
+        #tabbar-div {
+            background: #278296;
+            padding-left: 10px;
+            height: 21px;
+            padding-top: 0;
+        }
+
+        #tabbar-div p {
+            margin: 1px 0 0 0;
+        }
+
+        .tab-front {
+            background: #80BDCB;
+            line-height: 20px;
+            font-weight: bold;
+            padding: 4px 15px 4px 18px;
+            border-right: 2px solid #335b64;
+            cursor: pointer;
+        }
+
+        .tab-back {
+            color: #F4FAFB;
+            line-height: 20px;
+            padding: 4px 15px 4px 18px;
+            cursor: pointer;
+        }
+
+        .tab-hover {
+            color: #F4FAFB;
+            line-height: 20px;
+            padding: 4px 15px 4px 18px;
+            cursor: pointer;
+            background: #2F9DB5;
+        }
+
+        #top-div {
+            padding: 3px 0 2px;
+            background: #BBDDE5;
+            margin: 5px;
+            text-align: center;
+        }
+
+        #main-div {
+            border: 1px solid #345C65;
+            padding: 5px;
+            margin: 5px;
+            background: #FFF;
+        }
+
+        #menu-list {
+            padding: 0;
+            margin: 0;
+        }
+
+        #menu-list ul {
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+            color: #335B64;
+        }
+
+        #menu-list li {
+            padding-left: 16px;
+            line-height: 16px;
+            cursor: pointer;
+        }
+
+        #main-div a:visited, #menu-list a:link, #menu-list a:hover {
+            color: #335B64;
+            text-decoration: none;
+        }
+
+        #menu-list a:active {
+            color: #EB8A3D;
+        }
+
+        .explode {
+            background: url(__PUBLIC__/Admin/Images/menu_minus.gif) no-repeat 0 3px;
+            font-weight: bold;
+        }
+
+        .collapse {
+            background: url(__PUBLIC__/Admin/Images/menu_plus.gif) no-repeat 0 3px;
+            font-weight: bold;
+        }
+
+        .menu-item {
+            background: url(__PUBLIC__/Admin/Images/menu_arrow.gif) no-repeat 0 3px;
+            font-weight: normal;
+        }
+
+        #help-title {
+            font-size: 14px;
+            color: #000080;
+            margin: 5px 0;
+            padding: 0;
+        }
+
+        #help-content {
+            margin: 0;
+            padding: 0;
+        }
+
+        .tips {
+            color: #CC0000;
+        }
+
+        .link {
+            color: #000099;
+        }
+    </style>
 
 </head>
 <body>
 <div id="tabbar-div">
     <p>
-        <span style="float:right; padding:3px 5px;" >
+        <span style="float:right; padding:3px 5px;">
             <a href="javascript:toggleCollapse();">
-                <img id="toggleImg" src="__PUBLIC__/Admin/Images/menu_minus.gif" width="9" height="9" border="0" alt="闭合" />
+                <img id="toggleImg" src="__PUBLIC__/Admin/Images/menu_minus.gif" width="9" height="9" border="0"
+                     alt="闭合"/>
             </a>
         </span>
         <span class="tab-front" id="menu-tab">菜单</span>
@@ -120,10 +140,10 @@ body {
     <div id="menu-list">
         <ul id="menu-ul">
             <li class="explode" key="02_cat_and_goods" name="menu">
-            商品管理
+                商品管理
                 <ul>
-                    <li class="menu-item"><a href="goodsList.html" target="main-frame">商品列表</a></li>
-                    <li class="menu-item"><a href="goodsAdd.html" target="main-frame">添加新商品</a></li>
+                    <li class="menu-item"><a href="__MODULE__/Goods/lst" target="main-frame">商品列表</a></li>
+                    <li class="menu-item"><a href="__MODULE__/Goods/add" target="main-frame">添加新商品</a></li>
                     <li class="menu-item"><a href="categoryList.html" target="main-frame">商品分类</a></li>
                     <li class="menu-item"><a href="brandList.html" target="main-frame">商品品牌</a></li>
                     <li class="menu-item"><a href="goodsTrash.html" target="main-frame">商品回收站</a></li>
@@ -131,7 +151,7 @@ body {
             </li>
 
             <li class="explode" key="04_order" name="menu">
-            订单管理
+                订单管理
                 <ul>
                     <li class="menu-item"><a href="orderList.html" target="main-frame">订单列表</a></li>
                     <li class="menu-item"><a href="orderQuery.html" target="main-frame">订单查询</a></li>
@@ -141,7 +161,7 @@ body {
                 </ul>
             </li>
             <li class="explode" key="08_members" name="menu">
-            会员管理
+                会员管理
                 <ul>
                     <li class="menu-item"><a href="userList.html" target="main-frame">会员列表</a></li>
                     <li class="menu-item"><a href="userAdd.html" target="main-frame">添加会员</a></li>
@@ -155,9 +175,9 @@ body {
         <div id="help-content"></div>
     </div>
 </div>
-<script type="text/javascript" src="./Js/global.js"></script>
-<script type="text/javascript" src="./Js/utils.js"></script>
-<script type="text/javascript" src="./Js/transport.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/Js/global.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/Js/utils.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/Js/transport.js"></script>
 <script language="JavaScript" type="application/javascript">
     const collapse_all = "闭合";
     const expand_all = "展开";
@@ -169,14 +189,14 @@ body {
 
     function toggleCollapse() {
         let items = document.getElementsByTagName('LI');
-        for(let i = 0; i < items.length; i++) {
-            if(collapse) {
+        for (let i = 0; i < items.length; i++) {
+            if (collapse) {
                 if (items[i].className == "explode") {
-                    toggleCollapseExpand(items[i],"collapse");
+                    toggleCollapseExpand(items[i], "collapse");
                 }
             } else {
-                if(items[i].className == "collapse") {
-                    toggleCollapseExpand(items[i],"explode");
+                if (items[i].className == "collapse") {
+                    toggleCollapseExpand(items[i], "explode");
                     ToggleHanlder.Reset();
                 }
             }
@@ -193,49 +213,49 @@ body {
                     if (status == null) {
                         if (obj.childNodes[1].style.display != "none") {
                             obj.childNodes[1].style.display = "none";
-                            ToggleHanlder.RecordState(obj.getAttribute("key"),"collapse");
+                            ToggleHanlder.RecordState(obj.getAttribute("key"), "collapse");
                             obj.className = "collapse";
                         } else {
                             obj.childNodes[1].style.display = "block";
-                            ToggleHanlder.RecordState(obj.getAttribute("key"),"explode");
+                            ToggleHanlder.RecordState(obj.getAttribute("key"), "explode");
                             obj.className = "explode";
                         }
                         break;
                     } else {
-                        if(status == "collapse") {
-                            ToggleHanlder.RecordState(obj.getAttribute("key"),"collapse");
+                        if (status == "collapse") {
+                            ToggleHanlder.RecordState(obj.getAttribute("key"), "collapse");
                             obj.className = "collapse";
                         } else {
-                            ToggleHanlder.RecordState(obj.getAttribute("key"),"explode");
+                            ToggleHanlder.RecordState(obj.getAttribute("key"), "explode");
                             obj.className = "explode";
-                            }
-                            obj.childNodes[1].style.display = (status == "explode") ? "block" : "none";
+                        }
+                        obj.childNodes[1].style.display = (status == "explode") ? "block" : "none";
                     }
                 }
             }
         }
     }
 
-    document.getElementById('menu-list').onclick = function(e) {
+    document.getElementById('menu-list').onclick = function (e) {
         const obj = Utils.srcElement(e);
         toggleCollapseExpand(obj);
     }
 
-    document.getElementById('tabbar-div').onmouseover = function(e) {
+    document.getElementById('tabbar-div').onmouseover = function (e) {
         const obj = Utils.srcElement(e);
         if (obj.className == "tab-back") {
             obj.className = "tab-hover";
         }
     }
 
-    document.getElementById('tabbar-div').onmouseout = function(e) {
+    document.getElementById('tabbar-div').onmouseout = function (e) {
         const obj = Utils.srcElement(e);
         if (obj.className == "tab-hover") {
             obj.className = "tab-back";
         }
     }
 
-    document.getElementById('tabbar-div').onclick = function(e) {
+    document.getElementById('tabbar-div').onclick = function (e) {
         const obj = Utils.srcElement(e);
         const hlpTab = document.getElementById('help-tab');
         const mnuDiv = document.getElementById('menu-list');
@@ -268,37 +288,37 @@ body {
     }
 
     Object.extend(
-        ToggleHanlder ,{
-            SourceObject : {},
-            CookieName   : 'Toggle_State',
-            RecordState : function(name,state){
-                if(state == "collapse") {
+        ToggleHanlder, {
+            SourceObject: {},
+            CookieName: 'Toggle_State',
+            RecordState: function (name, state) {
+                if (state == "collapse") {
                     this.SourceObject[name] = state;
                 } else {
-                    if(this.SourceObject[name]) {
-                        delete(this.SourceObject[name]);
+                    if (this.SourceObject[name]) {
+                        delete (this.SourceObject[name]);
                     }
                 }
                 const date = new Date();
                 date.setTime(date.getTime() + 99999999);
-                document.setCookie(this.CookieName, this.SourceObject.toJSONString(),date.toGMTString());
+                document.setCookie(this.CookieName, this.SourceObject.toJSONString(), date.toGMTString());
             },
 
-            Reset :function() {
+            Reset: function () {
                 const date = new Date();
                 date.setTime(date.getTime() + 99999999);
-                document.setCookie(this.CookieName,"{}",date.toGMTString());
+                document.setCookie(this.CookieName, "{}", date.toGMTString());
             },
 
-            Load : function() {
-                if(document.getCookie(this.CookieName) != null) {
-                    this.SourceObject = eval("("+ document.getCookie(this.CookieName) +")");
+            Load: function () {
+                if (document.getCookie(this.CookieName) != null) {
+                    this.SourceObject = eval("(" + document.getCookie(this.CookieName) + ")");
                     const items = document.getElementsByTagName('LI');
-                    for(let i = 0; i < items.length; i++) {
-                        if( items[0].getAttribute("name") == "menu" && items[0].getAttribute("id") != '20_yun') {
-                            for(let k in this.SourceObject) {
-                                if(typeof(items[i]) == "object") {
-                                    if(items[i].getAttribute('key') == k) {
+                    for (let i = 0; i < items.length; i++) {
+                        if (items[0].getAttribute("name") == "menu" && items[0].getAttribute("id") != '20_yun') {
+                            for (let k in this.SourceObject) {
+                                if (typeof (items[i]) == "object") {
+                                    if (items[i].getAttribute('key') == k) {
                                         toggleCollapseExpand(items[i], this.SourceObject[k]);
                                         collapse = false;
                                     }

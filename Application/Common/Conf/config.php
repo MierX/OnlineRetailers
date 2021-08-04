@@ -20,4 +20,10 @@ return array(
     'DB_SQL_LOG'            =>  false, // SQL执行日志记录
     'DB_BIND_PARAM'         =>  false, // 数据库写入数据自动参数绑定
     'DEFAULT_FILTER'        =>  'trim,htmlspecialchars', // 默认参数过滤方法 用于I函数...
+    'IMAGE_CONFIG'          => array(
+        'maxSize'           => '1M',
+        'exts'              => array('jpg', 'gif', 'png', 'jpeg'),
+        'rootPath'          => './Public/Uploads/', // 保存图片的路径，绝对路径
+        'viewPath'           => '/Public/Uploads/', // 显示图片的路径，相对路径
+    ),
 );

@@ -13,9 +13,14 @@ class IndexController extends Controller
         $this->display();
     }
 
-    public function top()
+    public function main()
     {
 
+        $this->assign([
+            '_page_btn_name' => '添加商品',
+            '_page_title' => '欢迎页',
+            '_page_btn_link' => U('Goods/add')
+        ]);
         $this->display();
     }
 
@@ -25,7 +30,7 @@ class IndexController extends Controller
         $this->display();
     }
 
-    public function main()
+    public function top()
     {
 
         $this->display();

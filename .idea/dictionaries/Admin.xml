@@ -4,7 +4,10 @@
       <w>addtime</w>
       <w>bgcolor</w>
       <w>ecshop</w>
+      <w>exts</w>
+      <w>fieldtype</w>
       <w>hanlder</w>
+      <w>htmlspecialchars</w>
       <w>mbig</w>
       <w>onsale</w>
       <w>savename</w>
@@ -13,6 +16,7 @@
       <w>tabbar</w>
       <w>tabbody</w>
       <w>umeditor</w>
+      <w>xcache</w>
     </words>
   </dictionary>
 </component>
