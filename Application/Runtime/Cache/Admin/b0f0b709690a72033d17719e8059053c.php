@@ -14,7 +14,7 @@
         <a href="<?php echo ($_page_btn_link); ?>"><?php echo ($_page_btn_name); ?></a>
     </span>
     <span class="action-span1">
-        <a href="/index.php/Admin/Index/index">管理中心</a>
+        <a href="/index.php/Admin/Index/index">管理中心<?php echo (MODULE_NAME); ?></a>
     </span>
     <span id="search_id" class="action-span1"> - <?php echo ($_page_title); ?> </span>
     <div style="clear:both"></div>

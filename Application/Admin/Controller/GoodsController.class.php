@@ -7,9 +7,10 @@ use Think\Controller;
 class GoodsController extends Controller
 {
 
+    private $model;
+
     public function __construct()
     {
-
         parent::__construct();
 
         // 接收模型并保存到模型中
@@ -21,7 +22,6 @@ class GoodsController extends Controller
      */
     public function add()
     {
-
         // 判断是否有表单提交
         if (IS_POST) {
             /**
@@ -34,7 +34,7 @@ class GoodsController extends Controller
             if ($this->model->create(I('post.'), 1)) {
                 // 插入到数据库
                 if ($this->model->add()) {
-                    $this->success('操作成功！', U('lst'));
+                    $this->success('操作成功！', U('lst?p=' . I('get.p')));
                     exit;
                 }
             }
@@ -56,7 +56,6 @@ class GoodsController extends Controller
      */
     public function lst()
     {
-
         // 返回数据和翻页
         $data = $this->model->search();
 
@@ -75,13 +74,12 @@ class GoodsController extends Controller
      */
     public function edit()
     {
-
         // 判断是否有表单提交
         if (IS_POST) {
             if ($this->model->create(I('post.'), 2)) {
                 // save方法的返回值，如果失败则返回false，如果成功又分两种情况，未修改则返回0，修改了则返回受影响的记录数
                 if ($this->model->save() !== false) {
-                    $this->success('操作成功！', U('lst'));
+                    $this->success('操作成功！', U('lst', ['p' => I('get.p', 1)]));
                     exit;
                 }
             }
@@ -104,9 +102,8 @@ class GoodsController extends Controller
      */
     public function del()
     {
-
         if ($this->model->delete(I('get.id'))) {
-            $this->success('删除成功', U('lst'));
+            $this->success('删除成功', U('lst', ['p' => I('get.p', 1)]));
         } else {
             $this->error('删除失败！原因：' . $this->model->getError());
         }

@@ -145,7 +145,7 @@
                     <li class="menu-item"><a href="/index.php/Admin/Goods/lst" target="main-frame">商品列表</a></li>
                     <li class="menu-item"><a href="/index.php/Admin/Goods/add" target="main-frame">添加新商品</a></li>
                     <li class="menu-item"><a href="categoryList.html" target="main-frame">商品分类</a></li>
-                    <li class="menu-item"><a href="brandList.html" target="main-frame">商品品牌</a></li>
+                    <li class="menu-item"><a href="/index.php/Admin/Brands/lst" target="main-frame">商品品牌</a></li>
                     <li class="menu-item"><a href="goodsTrash.html" target="main-frame">商品回收站</a></li>
                 </ul>
             </li>

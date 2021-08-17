@@ -36,7 +36,7 @@ class GoodsModel extends Model
 
         // 判断有没有上传图片
         if ($_FILES['logo']['error'] == 0) {
-            $rs = uploadImage('logo', 'Goods', [
+            $rs = uploadOne('logo', 'Goods', [
                 'sm' => [50, 50],
                 'mid' => [130, 130],
                 'big' => [350, 350],

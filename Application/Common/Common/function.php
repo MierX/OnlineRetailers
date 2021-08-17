@@ -31,14 +31,14 @@ if (!function_exists('removeXSS')) {
 /**
  * 上传图片
  */
-if (!function_exists('uploadImage')) {
+if (!function_exists('uploadOne')) {
     /**
      * @param $imgName
      * @param $dirName
      * @param array $thumb
      * @return array
      */
-    function uploadImage($imgName, $dirName, $thumb = [])
+    function uploadOne($imgName, $dirName, $thumb = [])
     {
 
         if (isset($_FILES[$imgName]) && $_FILES[$imgName]['error'] == 0) {
