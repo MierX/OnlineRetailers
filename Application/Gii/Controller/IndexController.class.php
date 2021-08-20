@@ -28,10 +28,11 @@ class IndexController extends Controller
                 $this->error('配置文件不存在！');
             $config = include(GII_CONFIG_PATH . $configName);
             // 表名转成tp中的名字
-            $tpName = $this->_dbName2TpName($config['tableName']);
+//            $tpName = $this->_dbName2TpName($config['tableName']);
+            $tpName = ucfirst($config['tableName']);
             // 1.生成对应模块的目录结构
-            $cDir = APP_PATH . $config['moduleName'] . '/Controller/' . $tpName;
-            $mDir = APP_PATH . $config['moduleName'] . '/Model/' . $tpName;
+            $cDir = APP_PATH . $config['moduleName'] . '/Controller';
+            $mDir = APP_PATH . $config['moduleName'] . '/Model';
             $vDir = APP_PATH . $config['moduleName'] . '/View/' . $tpName;
             if (!is_dir($cDir))
                 mkdir($cDir, 0777);
@@ -124,7 +125,9 @@ class IndexController extends Controller
     // 生成配置文件
     public function makeConfigFile()
     {
+        header("Content-type: text/html; charset=utf-8");
         $db = M();
+        $db->query("set names utf-8");
         // 表名
         $tableName = I('post.config_name');
         if ($tableName) {
@@ -136,6 +139,32 @@ class IndexController extends Controller
                 if ($_tableInfo) {
                     // 取出表的字段 -》 表出所有字段的信息
                     $_tableFields = $db->query("SHOW FULL FIELDS FROM $___v");
+//                    echo "<pre>";
+//                    var_dump($_tableFields);
+//
+//                    foreach ($_tableFields as $k => $v) {
+//                        if ($v['Key'] == 'PRI') {
+//                            $_pk = $v['Field'];
+//                            continue;
+//                        }
+//                        if ($v['Field'] == 'addtime') {
+//                            continue;
+//                        }
+//                        if (preg_match('/(image|logo|face|img|pic)/', $v['Field'])) {
+//                            continue;
+//                        }
+//                        $_fields_arr[] = "'{$v['Field']}'";
+//                    }
+//                    $_fields_arr = implode(',', $_fields_arr);
+//                    var_dump($_fields_arr);
+/*                    echo "['<?php echo $_fields_arr; ?>']";*/
+//
+//
+//                    echo "</pre>";
+//
+//
+//
+//                    die;
                     foreach ($_tableFields as $k => $v) {
                         foreach ($v as $k1 => $v1) {
                             $v[ucfirst($k1)] = $v1;

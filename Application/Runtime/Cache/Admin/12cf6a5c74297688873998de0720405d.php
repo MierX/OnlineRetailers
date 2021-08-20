@@ -89,8 +89,6 @@
         <input type="submit" value=" 搜索 " class="button"/>
     </form>
 </div>
-
-<!-- 商品列表 -->
 <form method="post" action="" name="listForm" onsubmit="">
     <div class="list-div" id="listDiv">
         <table cellpadding="3" cellspacing="1">

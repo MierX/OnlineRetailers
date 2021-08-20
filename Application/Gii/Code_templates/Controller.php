@@ -1,3 +1,4 @@
+
 namespace <?php echo $config['moduleName']; ?>\Controller;
 
 use Think\Controller;
@@ -16,15 +17,15 @@ class <?php echo $config['tableName']; ?>Controller extends Controller
     }
 
     /**
-    * 添加商品
-    */
+     * 添加商品
+     */
     public function add()
     {
         // 判断是否有表单提交
-        if(IS_POST) {
-            if($this->model->create(I('post.'), 1)) {
+        if (IS_POST) {
+            if ($this->model->create(I('post.'), 1)) {
                 // 插入到数据库
-                if($id = $this->model->add()) {
+                if ($this->model->add()) {
                     $this->success('添加成功！', U('lst?p=' . I('get.p')));
                     exit;
                 }
@@ -37,7 +38,7 @@ class <?php echo $config['tableName']; ?>Controller extends Controller
     <?php if ($config['digui'] == 1): ?>
         $this->assign('parentData', $this->model->getTree());
     <?php endif; ?>
-        $this->assign([
+    $this->assign([
             '_page_btn_name' => '<?php echo $config['tableCnName']; ?>列表',
             '_page_title' => '添加<?php echo $config['tableCnName']; ?>页',
             '_page_btn_link' => U('lst'),
@@ -46,8 +47,8 @@ class <?php echo $config['tableName']; ?>Controller extends Controller
     }
 
     /**
-    * 商品列表页
-    */
+     * 商品列表页
+     */
     public function lst()
     {
     <?php if ($config['digui'] == 1): ?>
@@ -56,30 +57,29 @@ class <?php echo $config['tableName']; ?>Controller extends Controller
             'data' => $data,
         ]);
     <?php else: ?>
-        // 返回数据和翻页
+    // 返回数据和翻页
         $data = $this->model->search();
 
         // 显示列表页
         $this->assign($data);
     <?php endif; ?>
-        $this->assign([
-            '_page_btn_name' => '<?php echo $config['tableCnName']; ?>列表',
-            '_page_title' => '添加<?php echo $config['tableCnName']; ?>页',
-            '_page_btn_link' => U('lst'),
+    $this->assign([
+            '_page_btn_name' => '添加<?php echo $config['tableCnName']; ?>',
+            '_page_title' => '<?php echo $config['tableCnName']; ?>列表页',
+            '_page_btn_link' => U('add'),
         ]);
         $this->display();
     }
 
     /**
-    * 修改商品
-    */
+     * 修改商品
+     */
     public function edit()
     {
-        $<?php echo $config['pk']; ?> = I('get.<?php echo $config['pk']; ?>');
         // 判断是否有表单提交
-        if(IS_POST) {
-            if($this->model->create(I('post.'), 2)) {
-                if($this->model->save() !== false) {
+        if (IS_POST) {
+            if ($this->model->create(I('post.'), 2)) {
+                if ($this->model->save() !== false) {
                     $this->success('修改成功！', U('lst', ['p' => I('get.p', 1)]));
                     exit;
                 }
@@ -89,28 +89,27 @@ class <?php echo $config['tableName']; ?>Controller extends Controller
         }
 
         // 设置页面中的信息
-        $data = $this->model->find($<?php echo $config['pk']; ?>, 0);
-        $this->assign('data', $data);
+        $this->assign('data', $this->model->find(I('get.<?php echo $config['pk']; ?>', 0)));
     <?php if ($config['digui'] == 1): ?>
         $this->assign([
             'parentData' => $this->model->getTree(),
             'children' => $this->model->getChildren($<?php echo $config['pk']; ?>),
         ]);
     <?php endif; ?>
-        $this->assign([
+    $this->assign([
             '_page_btn_name' => '<?php echo $config['tableCnName']; ?>列表',
-            '_page_title' => '修改<?php echo $config['tableCnName']; ?>',
+            '_page_title' => '编辑<?php echo $config['tableCnName']; ?>页',
             '_page_btn_link' => U('lst'),
         ]);
         $this->display();
     }
 
     /**
-    * 删除商品
-    */
-    public function delete()
+     * 删除商品
+     */
+    public function del()
     {
-        if($this->model->delete(I('get.id', 0)) !== false) {
+        if ($this->model->delete(I('get.id', 0)) !== false) {
             $this->success('删除成功！', U('lst', ['p' => I('get.p'), 1]));
             exit;
         } else {

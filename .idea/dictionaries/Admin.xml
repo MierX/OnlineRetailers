@@ -2,11 +2,14 @@
   <dictionary name="Admin">
     <words>
       <w>addtime</w>
+      <w>addtimefrom</w>
+      <w>addtimeto</w>
       <w>bgcolor</w>
       <w>digui</w>
       <w>ecshop</w>
       <w>exts</w>
       <w>fieldtype</w>
+      <w>get.p'</w>
       <w>hanlder</w>
       <w>htmlspecialchars</w>
       <w>mbig</w>

@@ -25,37 +25,49 @@
 <div class="main-div">
     <form name="main_form" method="POST" action="/index.php/Admin/Brands/add.html" enctype="multipart/form-data">
         <table cellspacing="1" cellpadding="3" width="100%">
-            <tr>
+                                                <tr>
                 <td class="label">品牌名称：</td>
                 <td>
-                    <input  type="text" name="brand_name" value="" />
-                </td>
+                                        <input  type="text" name="brand_name" value="" />
+                                    </td>
             </tr>
-            <tr>
+                                                                                                    <tr>
                 <td class="label">官方网址：</td>
                 <td>
-                    <input  type="text" name="site_url" value="" />
-                </td>
+                                        <input  type="text" name="site_url" value="" />
+                                    </td>
             </tr>
-            <tr>
+                                                <tr>
                 <td class="label">品牌图片：</td>
                 <td>
-                	<input type="file" name="logo" /> 
-                </td>
+                                        <input type="file" name="logo"/>
+                                    </td>
             </tr>
-            <tr>
+                                                <tr>
+<td class='label'>品牌说明</td>
+<td>
+<textarea id='brand_desc' name='brand_desc'></textarea>
+</td>
+</tr>                        <tr>
                 <td colspan="99" align="center">
-                    <input type="submit" class="button" value=" 确定 " />
-                    <input type="reset" class="button" value=" 重置 " />
+                    <input type="submit" class="button" value=" 确定 "/>
+                    <input type="reset" class="button" value=" 重置 "/>
                 </td>
             </tr>
         </table>
     </form>
 </div>
-
-
-<script>
-</script>
+    <!--导入在线编辑器-->
+    <link href="/Public/Umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" charset="utf-8" src="/Public/Umeditor/umeditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/Public/Umeditor/umeditor.min.js"></script>
+    <script type="text/javascript" src="/Public/Umeditor/lang/zh-cn/zh-cn.js"></script>
+<script type="application/javascript">
+                UM.getEditor('brand_desc', {
+            initialFrameWidth:"100%",
+            initialFrameHeight: 350
+        });
+    </script>
 
 <div id="footer"> www.or.com</div>
 </body>

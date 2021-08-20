@@ -7,7 +7,7 @@
     </div>
     <div id="tabbody-div">
         <form name="main_form" method="POST" action="__SELF__" enctype="multipart/form-data">
-            <input type="hidden" name="{?php echo $config['pk']; ?}" value="<?php echo "<?php echo I('get.id'); ?>"; ?>" />
+            <input type="hidden" name="<?php echo $config['pk']; ?>" value="<?php echo "<?php echo I('get.{$config['pk']}'); ?>"; ?>" />
             <?php foreach ($config['fields'] as $k => $v):if($v['type'] == 'file'):
                 foreach ($v['save_fields'] as $k1 => $v1): ?>
                     <input type="hidden" name="old_<?php echo $v1; ?>" value="<?php echo "<?php echo \$data['{$v1}']; ?>"; ?>" />
@@ -66,19 +66,19 @@
 </div>
 
 <?php foreach ($config['fields'] as $k => $v):if($v['type'] == 'html'): ?>
-    <link href="__PUBLIC__/umeditor1_2_2-utf8-php/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
-    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/umeditor1_2_2-utf8-php/umeditor.config.js"></script>
-    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/umeditor1_2_2-utf8-php/umeditor.min.js"></script>
-    <script type="text/javascript" src="__PUBLIC__/umeditor1_2_2-utf8-php/lang/zh-cn/zh-cn.js"></script>
+    <link href="__PUBLIC__/Umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/Umeditor/umeditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/Umeditor/umeditor.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Umeditor/lang/zh-cn/zh-cn.js"></script>
 <?php break;endif;endforeach; ?>
-
-<script>
+<script type="application/javascript">
     <?php foreach ($config['fields'] as $k => $v):if((strpos($k, 'time') !== FALSE) || (strpos($k, 'date') !== FALSE)): ?>
         $("#<?php echo $k; ?>").datepicker();
     <?php endif;endforeach; ?>
     <?php foreach ($config['fields'] as $k => $v):if($v['type'] == 'html'): ?>
-        var um = UM.getEditor('<?php echo $k; ?>', {
-            initialFrameWidth:"100%"
-        });
+        UM.getEditor('<?php echo $k; ?>', {
+            initialFrameWidth:"100%",
+            initialFrameHeight: 350
+        })
     <?php endif;endforeach; ?>
 </script>

@@ -13,6 +13,7 @@ use Think\Upload;
 if (!function_exists('removeXSS')) {
     /**
      * @param $data
+     * @return mixed
      */
     function removeXSS($data)
     {
@@ -25,6 +26,7 @@ if (!function_exists('removeXSS')) {
         $_clean_xss_config->set('HTML.TargetBlank', TRUE);
         $_clean_xss_obj = new HTMLPurifier($_clean_xss_config);
         $_clean_xss_obj->purify($data);
+        return $data;
     }
 }
 
@@ -66,10 +68,10 @@ if (!function_exists('uploadOne')) {
 
                 $image = new Image();
                 $image->open("{$ci['rootPath']}/{$data['logo']}");
-                $image->thumb($thumb['sm'][0], $thumb['sm'][1])->save("{$ci['rootPath']}/{$data['sm_logo']}");
-                $image->thumb($thumb['mid'][0], $thumb['mid'][1])->save("{$ci['rootPath']}/{$data['mid_logo']}");
-                $image->thumb($thumb['big'][0], $thumb['big'][1])->save("{$ci['rootPath']}/{$data['big_logo']}");
-                $image->thumb($thumb['mbig'][0], $thumb['mbig'][1])->save("{$ci['rootPath']}/{$data['mbig_logo']}");
+                $image->thumb($thumb['sm'][0], $thumb['sm'][1])->save("{$ci['rootPath']}/{$data['sm_logo']}", $thumb['sm'][2]);
+                $image->thumb($thumb['mid'][0], $thumb['mid'][1])->save("{$ci['rootPath']}/{$data['mid_logo']}", $thumb['mid'][2]);
+                $image->thumb($thumb['big'][0], $thumb['big'][1])->save("{$ci['rootPath']}/{$data['big_logo']}", $thumb['big'][2]);
+                $image->thumb($thumb['mbig'][0], $thumb['mbig'][1])->save("{$ci['rootPath']}/{$data['mbig_logo']}", $thumb['mbig'][2]);
 
                 return [
                     'code' => 0,
@@ -120,11 +122,11 @@ if (!function_exists('deleteImage')) {
     {
 
         $savePath = C('IMAGE_CONFIG.rootPath');
-        unlink("{$savePath}/{$image['logo']}");
-        unlink("{$savePath}/{$image['sm_logo']}");
-        unlink("{$savePath}/{$image['mid_logo']}");
-        unlink("{$savePath}/{$image['big_logo']}");
-        unlink("{$savePath}/{$image['mbig_logo']}");
+        unlink("$savePath/{$image['logo']}");
+        unlink("$savePath/{$image['sm_logo']}");
+        unlink("$savePath/{$image['mid_logo']}");
+        unlink("$savePath/{$image['big_logo']}");
+        unlink("$savePath/{$image['mbig_logo']}");
     }
 }
 

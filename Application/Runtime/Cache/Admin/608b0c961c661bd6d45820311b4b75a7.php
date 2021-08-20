@@ -29,7 +29,7 @@
         </p>
     </div>
     <div id="tabbody-div">
-        <form enctype="multipart/form-data" action="/index.php/Admin/Goods/edit?id=34" method="post">
+        <form name="main_form" enctype="multipart/form-data" action="/index.php/Admin/Goods/edit?id=32" method="post">
             <input type="hidden" name="id" value="<?php echo I('get.id');?>"/>
             <table width="90%" id="general-table" align="center">
                 <tr>
