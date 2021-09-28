@@ -29,7 +29,7 @@ class IndexController extends Controller
             $config = include(GII_CONFIG_PATH . $configName);
             // 表名转成tp中的名字
 //            $tpName = $this->_dbName2TpName($config['tableName']);
-            $tpName = ucfirst($config['tableName']);
+            $tpName = str_replace(' ', '', ucwords(str_replace('_', ' ', $config['tableName'])));
             // 1.生成对应模块的目录结构
             $cDir = APP_PATH . $config['moduleName'] . '/Controller';
             $mDir = APP_PATH . $config['moduleName'] . '/Model';
@@ -157,7 +157,7 @@ class IndexController extends Controller
 //                    }
 //                    $_fields_arr = implode(',', $_fields_arr);
 //                    var_dump($_fields_arr);
-/*                    echo "['<?php echo $_fields_arr; ?>']";*/
+                    /*                    echo "['<?php echo $_fields_arr; ?>']";*/
 //
 //
 //                    echo "</pre>";

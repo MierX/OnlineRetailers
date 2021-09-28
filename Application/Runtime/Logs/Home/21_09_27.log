@@ -1,0 +1,18 @@
+[ 2021-09-27T09:34:24+08:00 ] 127.0.0.1 /
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000014s ]
+INFO: [ app_init ] --END-- [ RunTime:0.046575s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.024463s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.024519s ]
+NOTIC: [2] session_start(): open(E:\Work\PhpStudy2016\tmp\tmp\sess_k1ulklqlachu7ar8ctprlpgqu5, O_RDWR) failed: No such file or directory (2) F:\Work Files\Self\OnlineRetailers\ThinkPHP\Common\functions.php 第 1190 行.
+INFO: [ view_parse ] --START--
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.000598s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.000652s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000545s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000573s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000945s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000979s ]
+

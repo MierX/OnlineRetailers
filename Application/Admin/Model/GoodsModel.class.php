@@ -8,9 +8,9 @@ use Think\Page;
 class goodsModel extends Model
 {
 
-    protected $insertFields = 'goods_name,market_price,shop_price,is_on_sale,is_delete,goods_desc';
+    protected $insertFields = 'goods_name,market_price,shop_price,is_on_sale,is_delete,goods_desc,brand_id';
 
-    protected $updateFields = 'id,goods_name,market_price,shop_price,is_on_sale,is_delete,goods_desc';
+    protected $updateFields = 'id,goods_name,market_price,shop_price,is_on_sale,is_delete,goods_desc,brand_id';
 
     protected $_validate = [
         ['goods_name', 'require', '商品名称不能为空！', 1, 'regex', 3],
@@ -55,6 +55,23 @@ class goodsModel extends Model
         $data['addtime'] = date('Y-m-d H:i:s', time());
 
         return true;
+    }
+
+    /**
+     * 添加完成之后调用的函数，插入记录的id会放进data中
+     * @param $data
+     * @param $options
+     */
+    protected function _after_insert($data, $options)
+    {
+        $memberPrices = I('post.member_price');
+        foreach ($memberPrices as $k => $v) {
+            D('member_price')->add([
+                'price' => $v ?: $data['shop_price'],
+                'level_id' => $k,
+                'goods_id' => $data['id']
+            ]);
+        }
     }
 
     /**
@@ -123,51 +140,55 @@ class goodsModel extends Model
         $where = [];
 
         if ($goods_name = I('get.goods_name')) {
-            $where['goods_name'] = array('like', "%$goods_name%");
+            $where['a.goods_name'] = array('like', "%$goods_name%");
         }
 
         $market_pricefrom = I('get.market_pricefrom');
         $market_priceto = I('get.market_priceto');
         if ($market_pricefrom && $market_priceto) {
-            $where['market_price'] = array('between', array($market_pricefrom, $market_priceto));
+            $where['a.market_price'] = array('between', array($market_pricefrom, $market_priceto));
         } elseif ($market_pricefrom) {
-            $where['market_price'] = array('egt', $market_pricefrom);
+            $where['a.market_price'] = array('egt', $market_pricefrom);
         } elseif ($market_priceto) {
-            $where['market_price'] = array('elt', $market_priceto);
+            $where['a.market_price'] = array('elt', $market_priceto);
         }
 
         $shop_pricefrom = I('get.shop_pricefrom');
         $shop_priceto = I('get.shop_priceto');
         if ($shop_pricefrom && $shop_priceto) {
-            $where['shop_price'] = array('between', array($shop_pricefrom, $shop_priceto));
+            $where['a.shop_price'] = array('between', array($shop_pricefrom, $shop_priceto));
         } elseif ($shop_pricefrom) {
-            $where['shop_price'] = array('egt', $shop_pricefrom);
+            $where['a.shop_price'] = array('egt', $shop_pricefrom);
         } elseif ($shop_priceto) {
-            $where['shop_price'] = array('elt', $shop_priceto);
+            $where['a.shop_price'] = array('elt', $shop_priceto);
         }
 
         $is_on_sale = I('get.is_on_sale');
         if ($is_on_sale != '' && $is_on_sale != '-1') {
-            $where['is_on_sale'] = array('eq', $is_on_sale);
+            $where['a.is_on_sale'] = array('eq', $is_on_sale);
         }
 
         $is_delete = I('get.is_delete');
         if ($is_delete != '' && $is_delete != '-1') {
-            $where['is_delete'] = array('eq', $is_delete);
+            $where['a.is_delete'] = array('eq', $is_delete);
         }
 
         if ($goods_desc = I('get.goods_desc')) {
-            $where['goods_desc'] = array('like', "%$goods_desc%");
+            $where['a.goods_desc'] = array('like', "%$goods_desc%");
         }
 
         $addtimefrom = I('get.addtimefrom');
         $addtimeto = I('get.addtimeto');
         if ($addtimefrom && $addtimeto) {
-            $where['addtime'] = array('between', array(strtotime("$addtimefrom 00:00:00"), strtotime("$addtimeto 23:59:59")));
+            $where['a.addtime'] = array('between', array(strtotime("$addtimefrom 00:00:00"), strtotime("$addtimeto 23:59:59")));
         } elseif ($addtimefrom) {
-            $where['addtime'] = array('egt', strtotime("$addtimefrom 00:00:00"));
+            $where['a.addtime'] = array('egt', strtotime("$addtimefrom 00:00:00"));
         } elseif ($addtimeto) {
-            $where['addtime'] = array('elt', strtotime("$addtimeto 23:59:59"));
+            $where['a.addtime'] = array('elt', strtotime("$addtimeto 23:59:59"));
+        }
+
+        if ($brand_id = I('get.brand_id')) {
+            $where['a.brand_id'] = array('eq', $brand_id);
         }
 
         // 配置翻页的样式
@@ -177,7 +198,7 @@ class goodsModel extends Model
 
         return [
             'page' => $pageObj->show(),
-            'data' => $this->alias('a')->where($where)->group('a.id')->limit($pageObj->firstRow . ',' . $pageObj->listRows)->select(),
+            'data' => $this->alias('a')->field('a.*, b.brand_name')->join('brands b on a.brand_id = b.id', 'LEFT')->where($where)->limit($pageObj->firstRow . ',' . $pageObj->listRows)->select(),
         ];
     }
 }

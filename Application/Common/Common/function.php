@@ -130,3 +130,26 @@ if (!function_exists('deleteImage')) {
     }
 }
 
+/**
+ * 使用一个表中的数据制作下拉框
+ */
+if (!function_exists('buildSelect')) {
+    /**
+     * @param $tableName
+     * @param $selectName
+     * @param $valueFieldName
+     * @param $textFieldName
+     * @param string $selectedValue
+     */
+    function buildSelect($tableName, $selectName, $valueFieldName, $textFieldName, $selectedValue = '')
+    {
+        $data = D($tableName)->field("$valueFieldName, $textFieldName")->select();
+        $select = "<select name='{$selectName}'><option value=''>请选择</option>";
+        foreach ($data as $v) {
+            $select .= $v[$valueFieldName] === $selectedValue ? "<option value='{$v[$valueFieldName]}' selected='selected'>{$v[$textFieldName]}</option>" : "<option value='{$v[$valueFieldName]}'>{$v[$textFieldName]}</option>";
+        }
+        $select .= "</select>";
+        echo $select;
+    }
+}
+

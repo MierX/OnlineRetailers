@@ -29,81 +29,103 @@
         </p>
     </div>
     <div id="tabbody-div">
-        <form name="main_form" enctype="multipart/form-data" action="/index.php/Admin/Goods/edit?id=32" method="post">
-            <input type="hidden" name="id" value="<?php echo I('get.id');?>"/>
+        <form name="main_form" method="POST" action="/index.php/Admin/Goods/edit/id/1.html" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="<?php echo I('get.id'); ?>"/>
+            <input type="hidden" name="old_logo" value="<?php echo $data['logo']; ?>"/>
+            <input type="hidden" name="old_sm_logo" value="<?php echo $data['sm_logo']; ?>"/>
+            <input type="hidden" name="old_mid_logo" value="<?php echo $data['mid_logo']; ?>"/>
+            <input type="hidden" name="old_big_logo" value="<?php echo $data['big_logo']; ?>"/>
+            <input type="hidden" name="old_mbig_logo" value="<?php echo $data['mbig_logo']; ?>"/>
             <table width="90%" id="general-table" align="center">
                 <tr>
-                    <td class="label">商品名称：</td>
+                    <td class="label">
+                        商品名称：
+                    </td>
                     <td>
-                        <label>
-                            <input type="text" name="goods_name" value="<?php echo ($data["goods_name"]); ?>" size="30"/>
-                        </label>
-                        <span class="require-field">*</span>
+                        <input type="text" name="goods_name" value="<?php echo $data['goods_name']; ?>"/>
                     </td>
                 </tr>
                 <tr>
-                    <td class="label">本店售价：</td>
+                    <td class="label">所属品牌：</td>
                     <td>
-                        <label>
-                            <input type="text" name="shop_price" value="<?php echo ($data["shop_price"]); ?>" size="20"/>
-                        </label>
-                        <span class="require-field">*</span>
+                        <?php echo buildSelect('brands', 'brand_id', 'id', 'brand_name', $data['brand_id']);?>
                     </td>
                 </tr>
                 <tr>
-                    <td class="label">是否上架：</td>
+                    <td class="label">
+                        市场价格：
+                    </td>
                     <td>
-                        <label>
-                            <input type="radio" name="is_on_sale" value="是"
-                            <?php if($data["is_on_sale"] == 是): ?>checked="checked"<?php endif; ?>
-                            />
-                            是
-                        </label>
-                        <label>
-                            <input type="radio" name="is_on_sale" value="否"
-                            <?php if($data["is_on_sale"] == 否): ?>checked="checked"<?php endif; ?>
-                            />
-                            否
-                        </label>
+                        <input type="text" name="market_price" value="<?php echo $data['market_price']; ?>"/>
                     </td>
                 </tr>
                 <tr>
-                    <td class="label">市场售价：</td>
+                    <td class="label">
+                        本店价格：
+                    </td>
                     <td>
-                        <label>
-                            <input type="text" name="market_price" value="<?php echo ($data["market_price"]); ?>" size="20"/>
-                        </label>
+                        <input type="text" name="shop_price" value="<?php echo $data['shop_price']; ?>"/>
                     </td>
                 </tr>
                 <tr>
-                    <td class="label">LOGO：</td>
+                    <td class="label">
+                        是否上架：
+                    </td>
                     <td>
-                        <img src="/Public/Uploads/<?php echo ($data["logo"]); ?>" alt=""/>
-                        <input type="file" name="logo" size="60"/>
+                        <input type="radio" name="is_on_sale"
+                               value="是" <?php if($data['is_on_sale'] == '是') echo 'checked="checked"'; ?> />
+                        是 <input type="radio" name="is_on_sale"
+                                 value="否" <?php if($data['is_on_sale'] == '否') echo 'checked="checked"'; ?> />
+                        否
                     </td>
                 </tr>
                 <tr>
-                    <td class="label">商品简单描述：</td>
+                    <td class="label">
+                        是否放到回收站：
+                    </td>
                     <td>
-                        <textarea id="goods_desc" name="goods_desc"><?php echo ($data["goods_desc"]); ?></textarea>
+                        <input type="radio" name="is_delete"
+                               value="是" <?php if($data['is_delete'] == '是') echo 'checked="checked"'; ?> />
+                        是 <input type="radio" name="is_delete"
+                                 value="否" <?php if($data['is_delete'] == '否') echo 'checked="checked"'; ?> />
+                        否
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">
+                        商品描述：
+                    </td>
+                    <td>
+                                                            <textarea id="goods_desc" name="goods_desc">
+                                    <?php echo $data['goods_desc']; ?>                                </textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">
+                        原图：
+                    </td>
+                    <td>
+                        <input type="file" name="logo"/><br/>
+                        <?php showImage($data['logo'], 100); ?>                                                    </td>
+                </tr>
+                <tr>
+                    <td colspan="99" align="center">
+                        <input type="submit" class="button" value=" 确定 "/>
+                        <input type="reset" class="button" value=" 重置 "/>
                     </td>
                 </tr>
             </table>
-            <div class="button-div">
-                <input type="submit" value=" 确定 " class="button"/>
-                <input type="reset" value=" 重置 " class="button"/>
-            </div>
         </form>
     </div>
 </div>
-<!--导入在线编辑器-->
+
 <link href="/Public/Umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
 <script type="text/javascript" charset="utf-8" src="/Public/Umeditor/umeditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="/Public/Umeditor/umeditor.min.js"></script>
 <script type="text/javascript" src="/Public/Umeditor/lang/zh-cn/zh-cn.js"></script>
 <script type="application/javascript">
     UM.getEditor('goods_desc', {
-        initialFrameWidth: '100%',
+        initialFrameWidth: "100%",
         initialFrameHeight: 350
     })
 </script>

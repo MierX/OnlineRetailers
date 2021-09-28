@@ -25,59 +25,65 @@
 <div class="form-div">
     <form action="/index.php/Admin/Brands/lst" method="GET" name="searchForm">
         <img src="/Public/Admin/Images/icon_search.gif" width="26" height="22" border="0" alt="search"/>
-                <p>
+        <p>
             品牌名称：
-                        <input type="text" name="brand_name" size="30" value="<?php echo I('get.brand_name'); ?>
-            " />
-                    </p>
-                <p>
+            <input type="text" name="brand_name" size="30" value="<?php echo I('get.brand_name'); ?>
+            "/>
+        </p>
+        <p>
             品牌说明：
-                        <input type="text" name="brand_desc" size="30" value="<?php echo I('get.brand_desc'); ?>
-            " />
-                    </p>
-                <p>
+            <input type="text" name="brand_desc" size="30" value="<?php echo I('get.brand_desc'); ?>
+            "/>
+        </p>
+        <p>
             官方网址：
-                        <input type="text" name="site_url" size="30" value="<?php echo I('get.site_url'); ?>
-            " />
-                    </p>
-                <p>
+            <input type="text" name="site_url" size="30" value="<?php echo I('get.site_url'); ?>
+            "/>
+        </p>
+        <p>
             添加时间：
-                        从
+            从
             <input id="addtimefrom" type="text" name="addtimefrom" size="15"
-                   value="<?php echo I('get.addtimefrom'); ?>" />
+                   value="<?php echo I('get.addtimefrom'); ?>"/>
             到
             <input id="addtimeto" type="text" name="addtimeto" size="15"
-                   value="<?php echo I('get.addtimeto'); ?>" />
-                    </p>
-                <input type="submit" value=" 搜索 " class="button"/>
+                   value="<?php echo I('get.addtimeto'); ?>"/>
+        </p>
+        <input type="submit" value=" 搜索 " class="button"/>
     </form>
-</div><div class="list-div" id="listDiv">
+</div>
+<div class="list-div" id="listDiv">
     <table cellpadding="3" cellspacing="1">
         <tr>
-                        <th
-                        >品牌名称</th>
-                        <th
-                        >品牌说明</th>
-                        <th
-                        >官方网址</th>
-                        <th
-                        >品牌图片</th>
-                        <th width="60">操作</th>
+            <th
+            >品牌名称
+            </th>
+            <th
+            >品牌说明
+            </th>
+            <th
+            >官方网址
+            </th>
+            <th
+            >品牌图片
+            </th>
+            <th width="60">操作</th>
         </tr>
-        <?php foreach ($data as $k => $v): ?>        <tr class="tron">
-                                    <td align="center">
-                                <span><?php echo $v['brand_name']; ?></span>
+        <?php foreach ($data as $k => $v): ?>
+        <tr class="tron">
+            <td align="center">
+                <span><?php echo $v['brand_name']; ?></span>
             </td>
-                                                <td align="center">
-                                <span><?php echo $v['brand_desc']; ?></span>
+            <td align="center">
+                <span><?php echo $v['brand_desc']; ?></span>
             </td>
-                                                <td align="center">
-                                <span><?php echo $v['site_url']; ?></span>
+            <td align="center">
+                <span><?php echo $v['site_url']; ?></span>
             </td>
-                                                <td align="center">
+            <td align="center">
                 <span><?php showImage($v['sm_logo']); ?></span>
             </td>
-                                    <td align="center">
+            <td align="center">
                 <a href="<?php echo U('info?id='.$v['id'].'&p='.I('get.p')); ?>"
                    target="_blank" title="查看">
                     <img src="/Public/Admin/Images/icon_view.gif" width="16" height="16" border="0" alt=""/>
@@ -92,7 +98,8 @@
                 </a>
             </td>
         </tr>
-        <?php endforeach; ?>        <?php if(preg_match('/\d/', $page)): ?>         <tr>
+        <?php endforeach; ?>        <?php if(preg_match('/\d/', $page)): ?>
+        <tr>
             <td align="right" nowrap="true" colspan="99" height="30"><?php echo $page; ?></td>
         </tr>
         <?php endif; ?>            </table>
@@ -107,7 +114,8 @@
         src="/Public/datetimepicker/time/i18n/jquery-ui-timepicker-addon-i18n.min.js"></script>
 <script>$.timepicker.setDefaults($.timepicker.regional['zh-CN']);</script>
 <script>
-    $('#addtimefrom').datetimepicker(); $('#addtimeto').datetimepicker(); </script>
+    $('#addtimefrom').datetimepicker();
+    $('#addtimeto').datetimepicker(); </script>
 <script type="text/javascript" src="/Public/Admin/Js/tron.js"></script>
 
 <div id="footer"> www.or.com</div>

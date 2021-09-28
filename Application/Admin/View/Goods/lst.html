@@ -8,6 +8,10 @@
             "/>
         </p>
         <p>
+            品牌名称：
+            {:buildSelect('brands', 'brand_id', 'id', 'brand_name', I('get.brand_id'))}
+        </p>
+        <p>
             市场价格：
             从
             <input id="market_pricefrom" type="text" name="market_pricefrom" size="15"
@@ -75,6 +79,9 @@
             >商品名称
             </th>
             <th
+            >所属品牌
+            </th>
+            <th
             >市场价格
             </th>
             <th
@@ -95,6 +102,9 @@
         <tr class="tron">
             <td align="center">
                 <span><?php echo $v['goods_name']; ?></span>
+            </td>
+            <td align="center">
+                <span><?php echo $v['brand_name']; ?></span>
             </td>
             <td align="center">
                 <span><?php echo $v['market_price']; ?></span>

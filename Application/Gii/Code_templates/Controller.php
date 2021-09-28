@@ -3,7 +3,7 @@ namespace <?php echo $config['moduleName']; ?>\Controller;
 
 use Think\Controller;
 
-class <?php echo $config['tableName']; ?>Controller extends Controller
+class <?php echo str_replace(' ', '', ucwords(str_replace('_', ' ', $config['tableName']))); ?>Controller extends Controller
 {
 
     private $model;

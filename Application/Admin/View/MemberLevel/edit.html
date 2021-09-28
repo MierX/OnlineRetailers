@@ -1,0 +1,48 @@
+<layout name="layout"/>
+<div class="tab-div">
+    <div id="tabbar-div">
+        <p>
+            <span class="tab-front" id="general-tab">通用信息</span>
+        </p>
+    </div>
+    <div id="tabbody-div">
+        <form name="main_form" method="POST" action="__SELF__" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="<?php echo I('get.id'); ?>" />
+                        <table width="90%" id="general-table" align="center">
+                                                    <tr>
+                        <td class="label">
+                            级别名称：
+                        </td>
+                        <td>
+                                                            <input  type="text" name="level_name" value="<?php echo $data['level_name']; ?>" />
+                                                    </td>
+                    </tr>
+                                    <tr>
+                        <td class="label">
+                            积分下限：
+                        </td>
+                        <td>
+                                                            <input  type="text" name="integral_down" value="<?php echo $data['integral_down']; ?>" />
+                                                    </td>
+                    </tr>
+                                    <tr>
+                        <td class="label">
+                            积分上限：
+                        </td>
+                        <td>
+                                                            <input  type="text" name="integral_up" value="<?php echo $data['integral_up']; ?>" />
+                                                    </td>
+                    </tr>
+                                <tr>
+                    <td colspan="99" align="center">
+                        <input type="submit" class="button" value=" 确定 "/>
+                        <input type="reset" class="button" value=" 重置 "/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<script type="application/javascript">
+        </script>

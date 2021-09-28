@@ -9,13 +9,11 @@ class IndexController extends Controller
 
     public function index()
     {
-
         $this->display();
     }
 
     public function main()
     {
-
         $this->assign([
             '_page_btn_name' => '添加商品',
             '_page_title' => '欢迎页',
@@ -26,13 +24,11 @@ class IndexController extends Controller
 
     public function menu()
     {
-
         $this->display();
     }
 
     public function top()
     {
-
         $this->display();
     }
 }

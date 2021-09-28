@@ -4,7 +4,7 @@ namespace <?php echo $config['moduleName']; ?>\Model;
 use Think\Model;
 use Think\Page;
 
-class <?php echo $config['tableName']; ?>Model extends Model
+class <?php echo str_replace(' ', '', ucwords(str_replace('_', ' ', $config['tableName']))); ?>Model extends Model
 {
 
     protected $insertFields = <?php echo $config['insertFields']; ?>;
@@ -33,7 +33,7 @@ class <?php echo $config['tableName']; ?>Model extends Model
     ?>
     // 上传文件至服务器
     if (isset($_FILES['<?php echo $k; ?>']) && $_FILES['<?php echo $k; ?>']['error'] == 0) {
-            $rs = uploadOne('<?php echo $k; ?>', '<?php echo ucfirst($config['tableName']); ?>', [
+            $rs = uploadOne('<?php echo $k; ?>', '<?php echo str_replace(' ', '', ucwords(str_replace('_', ' ', $config['tableName']))); ?>', [
             <?php foreach ($v['thumbs'] as $k1 => $v1): ?>
     '<?php echo explode('_', $v['save_fields'][($k1 + 1)])[0]; ?>' => [<?php echo $v1[0]; ?>, <?php echo $v1[1]; ?>],
             <?php endforeach; ?>
@@ -74,7 +74,7 @@ class <?php echo $config['tableName']; ?>Model extends Model
     <?php foreach ($config['fields'] as $k => $v):if ($v['type'] == 'file'): ?>
     // 上传文件至服务器
         if (isset($_FILES['<?php echo $k; ?>']) && $_FILES['<?php echo $k; ?>']['error'] == 0) {
-            $rs = uploadOne('<?php echo $k; ?>', '<?php echo $config['tableName']; ?>', [
+            $rs = uploadOne('<?php echo $k; ?>', '<?php echo str_replace(' ', '', ucwords(str_replace('_', ' ', $config['tableName']))); ?>', [
             <?php foreach ($v['thumbs'] as $k1 => $v1): ?>
     '<?php echo explode('_', $v['save_fields'][($k1 + 1)])[0]; ?>' => [<?php echo $v1[0]; ?>, <?php echo $v1[1]; ?>],
             <?php endforeach; ?>

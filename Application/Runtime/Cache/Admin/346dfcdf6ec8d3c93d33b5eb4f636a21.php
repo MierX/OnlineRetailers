@@ -22,73 +22,115 @@
 
 <!--  内容  -->
 
-<div class="tab-div">
+<div class="main-div">
     <div id="tabbar-div">
         <p>
-            <span class="tab-front" id="general-tab">通用信息</span>
+            <span class="tab-front">通用信息</span>
+            <span class="tab-back">商品描述</span>
+            <span class="tab-back">会员价格</span>
+            <span class="tab-back">商品属性</span>
+            <span class="tab-back">商品相册</span>
         </p>
     </div>
-    <div id="tabbody-div">
-        <form enctype="multipart/form-data" action="/index.php/Admin/Goods/add.html" method="post">
-            <table width="90%" id="general-table" align="center">
-                <tr>
-                    <td class="label">商品名称：</td>
+    <form name="main_form" method="POST" action="/index.php/Admin/Goods/add" enctype="multipart/form-data">
+        <table cellspacing="1" cellpadding="3" width="100%" class="tab">
+            <tr>
+                <td class="label">所属品牌：</td>
+                <td>
+                    <?php echo buildSelect('brands', 'brand_id', 'id', 'brand_name', '');?>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">商品名称：</td>
+                <td>
+                    <input type="text" name="goods_name" value=""/>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">市场价格：</td>
+                <td>
+                    <input type="number" name="market_price" value=""/>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">本店价格：</td>
+                <td>
+                    <input type="number" name="shop_price" value=""/>
+                </td>
+            <tr>
+                <td class="label">是否上架：</td>
+                <td>
+                    <input type="radio" name="is_on_sale" value="是" checked="checked"/>
+                    是 <input type="radio" name="is_on_sale" value="否"/>
+                    否
+                </td>
+            </tr>
+            <tr>
+                <td colspan="99" align="center">
+                    <input type="submit" class="button" value=" 确定 "/>
+                    <input type="reset" class="button" value=" 重置 "/>
+                </td>
+            </tr>
+        </table>
+        <table cellspacing="1" cellpadding="3" width="100%" class="tab" style="display: none">
+            <tr>
+                <td class='label'>商品描述</td>
+                <td>
+                    <textarea id='goods_desc' name='goods_desc'></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="99" align="center">
+                    <input type="submit" class="button" value=" 确定 "/>
+                    <input type="reset" class="button" value=" 重置 "/>
+                </td>
+            </tr>
+        </table>
+        <table cellspacing="1" cellpadding="3" width="100%" class="tab" style="display: none">
+            <?php if(is_array($level)): foreach($level as $key=>$lo): ?><tr>
+                    <td class="label"><?php echo ($lo["level_name"]); ?>价格：</td>
                     <td>
-                        <label>
-                            <input type="text" name="goods_name" value="" size="30"/>
-                        </label>
-                        <span class="require-field">*</span>
+                        <input type="number" name="member_price[<?php echo ($lo["id"]); ?>]" value=""/>
                     </td>
-                </tr>
-                <tr>
-                    <td class="label">本店售价：</td>
-                    <td>
-                        <label>
-                            <input type="text" name="shop_price" value="0" size="20"/>
-                        </label>
-                        <span class="require-field">*</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label">是否上架：</td>
-                    <td>
-                        <label>
-                            <input type="radio" name="is_on_sale" value="是" checked="checked"/>
-                            是
-                        </label>
-                        <label>
-                            <input type="radio" name="is_on_sale" value="否"/>
-                            否
-                        </label>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label">市场售价：</td>
-                    <td>
-                        <label>
-                            <input type="text" name="market_price" value="0" size="20"/>
-                        </label>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label">LOGO：</td>
-                    <td>
-                        <input type="file" name="logo" size="60"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label">商品简单描述：</td>
-                    <td>
-                        <textarea id="goods_desc" name="goods_desc"></textarea>
-                    </td>
-                </tr>
-            </table>
-            <div class="button-div">
-                <input type="submit" value=" 确定 " class="button"/>
-                <input type="reset" value=" 重置 " class="button"/>
-            </div>
-        </form>
-    </div>
+                </tr><?php endforeach; endif; ?>
+            <tr>
+                <td colspan="99" align="center">
+                    <input type="submit" class="button" value=" 确定 "/>
+                    <input type="reset" class="button" value=" 重置 "/>
+                </td>
+            </tr>
+        </table>
+        <table cellspacing="1" cellpadding="3" width="100%" class="tab" style="display: none">
+            <tr>
+                <td class="label">是否放到回收站：</td>
+                <td>
+                    <input type="radio" name="is_delete" value="是"/>
+                    是 <input type="radio" name="is_delete" value="否" checked="checked"/>
+                    否
+                </td>
+            </tr>
+            <tr>
+                <td colspan="99" align="center">
+                    <input type="submit" class="button" value=" 确定 "/>
+                    <input type="reset" class="button" value=" 重置 "/>
+                </td>
+            </tr>
+        </table>
+        <table cellspacing="1" cellpadding="3" width="100%" class="tab" style="display: none">
+            <tr>
+                <td class="label">原图：</td>
+                <td>
+                    <input type="file" name="logo"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="99" align="center">
+                    <input type="submit" class="button" value=" 确定 "/>
+                    <input type="reset" class="button" value=" 重置 "/>
+                </td>
+            </tr>
+        </table>
+    </form>
 </div>
 <!--导入在线编辑器-->
 <link href="/Public/Umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
@@ -97,8 +139,14 @@
 <script type="text/javascript" src="/Public/Umeditor/lang/zh-cn/zh-cn.js"></script>
 <script type="application/javascript">
     UM.getEditor('goods_desc', {
-        initialFrameWidth: '100%',
+        initialFrameWidth: "100%",
         initialFrameHeight: 350
+    });
+
+    $('#tabbar-div p span').click(function () {
+        let i = $(this).index();
+        $(this).removeClass('tab-back').addClass('tab-front').siblings().removeClass('tab-front').addClass('tab-back');
+        $('.tab').eq(i).show().siblings().hide();
     })
 </script>
 

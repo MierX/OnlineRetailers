@@ -1,7 +1,22 @@
 <layout name="layout"/>
 <div class="main-div">
+    <div id="tabbar-div">
+        <p>
+            <span class="tab-front">通用信息</span>
+            <span class="tab-back">商品描述</span>
+            <span class="tab-back">会员价格</span>
+            <span class="tab-back">商品属性</span>
+            <span class="tab-back">商品相册</span>
+        </p>
+    </div>
     <form name="main_form" method="POST" action="__SELF__" enctype="multipart/form-data">
-        <table cellspacing="1" cellpadding="3" width="100%">
+        <table cellspacing="1" cellpadding="3" width="100%" class="tab">
+            <tr>
+                <td class="label">所属品牌：</td>
+                <td>
+                    {:buildSelect('brands', 'brand_id', 'id', 'brand_name', '')}
+                </td>
+            </tr>
             <tr>
                 <td class="label">商品名称：</td>
                 <td>
@@ -11,15 +26,14 @@
             <tr>
                 <td class="label">市场价格：</td>
                 <td>
-                    <input type="text" name="market_price" value=""/>
+                    <input type="number" name="market_price" value=""/>
                 </td>
             </tr>
             <tr>
                 <td class="label">本店价格：</td>
                 <td>
-                    <input type="text" name="shop_price" value=""/>
+                    <input type="number" name="shop_price" value=""/>
                 </td>
-            </tr>
             <tr>
                 <td class="label">是否上架：</td>
                 <td>
@@ -29,6 +43,44 @@
                 </td>
             </tr>
             <tr>
+                <td colspan="99" align="center">
+                    <input type="submit" class="button" value=" 确定 "/>
+                    <input type="reset" class="button" value=" 重置 "/>
+                </td>
+            </tr>
+        </table>
+        <table cellspacing="1" cellpadding="3" width="100%" class="tab" style="display: none">
+            <tr>
+                <td class='label'>商品描述</td>
+                <td>
+                    <textarea id='goods_desc' name='goods_desc'></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="99" align="center">
+                    <input type="submit" class="button" value=" 确定 "/>
+                    <input type="reset" class="button" value=" 重置 "/>
+                </td>
+            </tr>
+        </table>
+        <table cellspacing="1" cellpadding="3" width="100%" class="tab" style="display: none">
+            <foreach name="level" item="lo">
+                <tr>
+                    <td class="label">{$lo.level_name}价格：</td>
+                    <td>
+                        <input type="number" name="member_price[{$lo.id}]" value=""/>
+                    </td>
+                </tr>
+            </foreach>
+            <tr>
+                <td colspan="99" align="center">
+                    <input type="submit" class="button" value=" 确定 "/>
+                    <input type="reset" class="button" value=" 重置 "/>
+                </td>
+            </tr>
+        </table>
+        <table cellspacing="1" cellpadding="3" width="100%" class="tab" style="display: none">
+            <tr>
                 <td class="label">是否放到回收站：</td>
                 <td>
                     <input type="radio" name="is_delete" value="是"/>
@@ -37,15 +89,17 @@
                 </td>
             </tr>
             <tr>
+                <td colspan="99" align="center">
+                    <input type="submit" class="button" value=" 确定 "/>
+                    <input type="reset" class="button" value=" 重置 "/>
+                </td>
+            </tr>
+        </table>
+        <table cellspacing="1" cellpadding="3" width="100%" class="tab" style="display: none">
+            <tr>
                 <td class="label">原图：</td>
                 <td>
                     <input type="file" name="logo"/>
-                </td>
-            </tr>
-            <tr>
-                <td class='label'>商品描述</td>
-                <td>
-                    <textarea id='goods_desc' name='goods_desc'></textarea>
                 </td>
             </tr>
             <tr>
@@ -67,4 +121,10 @@
         initialFrameWidth: "100%",
         initialFrameHeight: 350
     });
+
+    $('#tabbar-div p span').click(function () {
+        let i = $(this).index();
+        $(this).removeClass('tab-back').addClass('tab-front').siblings().removeClass('tab-front').addClass('tab-back');
+        $('.tab').eq(i).show().siblings().hide();
+    })
 </script>

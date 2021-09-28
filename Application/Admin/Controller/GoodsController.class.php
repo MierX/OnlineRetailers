@@ -40,6 +40,7 @@ class goodsController extends Controller
             '_page_btn_name' => '商品列表',
             '_page_title' => '添加商品页',
             '_page_btn_link' => U('lst'),
+            'level' => M('member_level')->field('id, level_name')->select(),
         ]);
         $this->display();
     }
@@ -85,6 +86,7 @@ class goodsController extends Controller
             '_page_btn_name' => '商品列表',
             '_page_title' => '编辑商品页',
             '_page_btn_link' => U('lst'),
+            'brands' => M('brands')->field('id, brand_name')->select(),
         ]);
         $this->display();
     }
