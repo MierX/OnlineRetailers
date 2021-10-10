@@ -8,9 +8,9 @@ use Think\Page;
 class goodsModel extends Model
 {
 
-    protected $insertFields = 'goods_name,market_price,shop_price,is_on_sale,is_delete,goods_desc,brand_id';
+    protected $insertFields = 'goods_name,market_price,shop_price,is_on_sale,is_delete,goods_desc,brand_id,cat_id';
 
-    protected $updateFields = 'id,goods_name,market_price,shop_price,is_on_sale,is_delete,goods_desc,brand_id';
+    protected $updateFields = 'id,goods_name,market_price,shop_price,is_on_sale,is_delete,goods_desc,brand_id,cat_id';
 
     protected $_validate = [
         ['goods_name', 'require', '商品名称不能为空！', 1, 'regex', 3],
@@ -21,6 +21,7 @@ class goodsModel extends Model
         ['shop_price', 'currency', '本店价格必须是货币格式！', 1, 'regex', 3],
         ['is_on_sale', '是,否', "是否上架的值只能是在 '是,否' 中的一个值！", 2, 'in', 3],
         ['is_delete', '是,否', "是否放到回收站的值只能是在 '是,否' 中的一个值！", 2, 'in', 3],
+        ['cat_id', 'require', '必须选择主分类！', 1, 'regex', 3],
     ];
 
     /**
@@ -69,7 +70,18 @@ class goodsModel extends Model
             D('member_price')->add([
                 'price' => $v ?: $data['shop_price'],
                 'level_id' => $k,
-                'goods_id' => $data['id']
+                'goods_id' => $data['id'],
+            ]);
+        }
+
+        $goodsCats = array_unique(I('post.goods_cat'));
+        foreach ($goodsCats as $k => $v) {
+            if (empty($v) || !is_numeric($v)) {
+                continue;
+            }
+            D('goods_cat')->add([
+                'cat_id' => $v,
+                'goods_id' => $data['id'],
             ]);
         }
     }
@@ -111,6 +123,18 @@ class goodsModel extends Model
             ]);
         }
 
+        D('goods_cat')->where(['goods_id' => $options['where']['id']])->delete();
+        $goodsCats = array_unique(I('post.goods_cat'));
+        foreach ($goodsCats as $k => $v) {
+            if (empty($v) || !is_numeric($v)) {
+                continue;
+            }
+            D('goods_cat')->add([
+                'cat_id' => $v,
+                'goods_id' => $options['where']['id'],
+            ]);
+        }
+
         return true;
     }
 
@@ -128,7 +152,27 @@ class goodsModel extends Model
 
         deleteImage($this->field('logo,sm_logo,mid_logo,big_logo,mbig_logo')->find($options['where']['id']));
 
+        D('goods_cat')->where(['goods_id' => $options['where']['id']])->delete();
+
         return true;
+    }
+
+    /**
+     * 取出一个分类下所有商品的id
+     */
+    public function getGoodsIdByCatId($catId)
+    {
+        $catIds = [];
+        D('category')->getChildren($catIds, $catId);
+        $catId = [$catId];
+        if (!empty($catIds)) {
+            $catId = array_merge($catId,array_column($catIds, 'id'));
+        }
+
+        $goodIds = $this->field('id')->where(['cat_id' => ['in', $catId]])->select() ?: [];
+        $goodsCats = D('goods_cat')->field('DISTINCT goods_id as id')->where(['cat_id' => ['in', $catId]])->select() ?: [];
+
+        return array_unique(array_column(array_merge($goodIds, $goodsCats), 'id'));
     }
 
     /**
@@ -191,6 +235,11 @@ class goodsModel extends Model
             $where['a.brand_id'] = array('eq', $brand_id);
         }
 
+        if ($cat_id = I('get.cat_id')) {
+            $goodsIds = $this->getGoodsIdByCatId($cat_id);
+            $where['a.id'] = array('in', $goodsIds);
+        }
+
         // 配置翻页的样式
         $pageObj = new Page($this->alias('a')->where($where)->count(), $perPage);
         $pageObj->setConfig('prev', '上一页');
@@ -198,7 +247,17 @@ class goodsModel extends Model
 
         return [
             'page' => $pageObj->show(),
-            'data' => $this->alias('a')->field('a.*, b.brand_name')->join('brands b on a.brand_id = b.id', 'LEFT')->where($where)->limit($pageObj->firstRow . ',' . $pageObj->listRows)->select(),
+            'data' => $this
+                ->alias('a')
+                ->field('a.*, b.brand_name, c.name as cat_name, GROUP_CONCAT(e.name SEPARATOR "<br />") as goods_cat')
+                ->join('brands b on a.brand_id = b.id', 'LEFT')
+                ->join('category c on a.cat_id = c.id', 'LEFT')
+                ->join('goods_cat d on a.id = d.goods_id', 'LEFT')
+                ->join('category e on e.id = d.cat_id', 'LEFT')
+                ->where($where)
+                ->group('a.id')
+                ->limit($pageObj->firstRow . ',' . $pageObj->listRows)
+                ->select(),
         ];
     }
 }

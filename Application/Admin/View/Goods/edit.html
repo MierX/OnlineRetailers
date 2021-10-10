@@ -1,4 +1,10 @@
+<!--suppress JSJQueryEfficiency -->
 <layout name="layout"/>
+<style>
+    #goods_cat_lst li {
+        margin: 5px;
+    }
+</style>
 <div class="tab-div">
     <div id="tabbar-div">
         <p>
@@ -26,6 +32,46 @@
                     <td class="label">所属品牌：</td>
                     <td>
                         {:buildSelect('brands', 'brand_id', 'id', 'brand_name', $data['brand_id'])}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">主分类：</td>
+                    <td>
+                        <select name="cat_id">
+                            <option value="">选择分类</option>
+                            <foreach name="catData" item="co">
+                                <option value="{$co.id}" <eq name="co.id" value="$data['cat_id']">selected="selected"</eq>>{$co.name}</option>
+                            </foreach>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">扩展分类</td>
+                    <td>
+                        <ul id="goods_cat_lst">
+                            <notempty name="goodsCat">
+                                <foreach name="goodsCat" item="go">
+                                    <li>
+                                        <select name="goods_cat[]">
+                                            <option value="">选择分类</option>
+                                            <foreach name="catData" item="co">
+                                                <option value="{$co.id}" <eq name="co.id" value="$go['cat_id']">selected="selected"</eq>>{$co.name}</option>
+                                            </foreach>
+                                        </select>
+                                    </li>
+                                </foreach>
+                            <else />
+                                <li>
+                                    <select name="goods_cat[]">
+                                        <option value="">选择分类</option>
+                                        <foreach name="catData" item="co">
+                                            <option value="{$co.id}">{$co.name}</option>
+                                        </foreach>
+                                    </select>
+                                </li>
+                            </notempty>
+                        </ul>
+                        <button onclick="$('#goods_cat_lst').append($('#goods_cat_lst').find('li').eq(0).clone());" type="button" id="btn_add_cat">添加</button>
                     </td>
                 </tr>
                 <tr>

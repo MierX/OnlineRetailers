@@ -19,10 +19,12 @@ SET NAMES utf8;
 #     big_logo     varchar(150)       not null default '' comment '大图',
 #     mbig_logo    varchar(150)       not null default '' comment '更大图',
 #     brand_id     mediumint unsigned not null default '0' comment '品牌id',
+#     cat_id       mediumint unsigned not null default '0' comment '主分类id',
 #     primary key (id),
 #     key shop_price (shop_price),
 #     key addtime (addtime),
 #     key brand_id (brand_id),
+#     key brand_id (cat_id),
 #     key is_on_sale (is_on_sale)
 # ) engine = InnoDB
 #   default charset = utf8 comment '商品表';
@@ -67,3 +69,27 @@ SET NAMES utf8;
 #     primary key (id)
 # ) engine = InnoDB
 #   default charset = utf8 comment '会员价格';
+#
+# DROP TABLE IF EXISTS category;
+# CREATE TABLE category
+# (
+#     id      mediumint unsigned not null auto_increment comment 'id',
+#     name    varchar(30)        not null default '' comment '分类名称',
+#     pid     mediumint          not null default '0' comment '上级分类',
+#     addtime datetime           not null default CURRENT_TIMESTAMP comment '创建时间',
+#     primary key (id)
+# ) engine = InnoDB
+#   default charset = utf8 comment '商品分类';
+#
+# DROP TABLE IF EXISTS goods_cat;
+# CREATE TABLE goods_cat
+# (
+#     id       mediumint unsigned not null auto_increment comment 'id',
+#     cat_id   mediumint unsigned not null comment '分类id',
+#     goods_id mediumint unsigned not null comment '商品id',
+#     addtime  datetime           not null default CURRENT_TIMESTAMP comment '创建时间',
+#     primary key (id),
+#     key goods_id (goods_id),
+#     key cat_id (cat_id)
+# ) engine = InnoDB
+#   default charset = utf8 comment '商品扩展分类';

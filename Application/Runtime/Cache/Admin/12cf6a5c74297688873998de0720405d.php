@@ -35,6 +35,14 @@
             <?php echo buildSelect('brands', 'brand_id', 'id', 'brand_name', I('get.brand_id'));?>
         </p>
         <p>
+            <?php $cat_id = I('get.cat_id'); ?>
+            主分类：
+            <select name="cat_id">
+                <option value="">选择分类</option>
+                <?php if(is_array($catData)): foreach($catData as $key=>$co): ?><option value="<?php echo ($co["id"]); ?>" <?php if(($co["id"]) == $cat_id): ?>selected="selected"<?php endif; ?>><?php echo ($co["name"]); ?></option><?php endforeach; endif; ?>
+            </select>
+        </p>
+        <p>
             市场价格：
             从
             <input id="market_pricefrom" type="text" name="market_pricefrom" size="15"
@@ -105,6 +113,12 @@
             >所属品牌
             </th>
             <th
+            >主分类
+            </th>
+            <th
+            >扩展分类
+            </th>
+            <th
             >市场价格
             </th>
             <th
@@ -128,6 +142,12 @@
             </td>
             <td align="center">
                 <span><?php echo $v['brand_name']; ?></span>
+            </td>
+            <td align="center">
+                <span><?php echo $v['cat_name']; ?></span>
+            </td>
+            <td align="center">
+                <span><?php echo $v['goods_cat']; ?></span>
             </td>
             <td align="center">
                 <span><?php echo $v['market_price']; ?></span>

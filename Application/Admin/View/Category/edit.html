@@ -1,0 +1,45 @@
+<layout name="layout"/>
+<div class="tab-div">
+    <div id="tabbar-div">
+        <p>
+            <span class="tab-front" id="general-tab">通用信息</span>
+        </p>
+    </div>
+    <div id="tabbody-div">
+        <form name="main_form" method="POST" action="__SELF__" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="<?php echo I('get.id'); ?>"/>
+            <table width="90%" id="general-table" align="center">
+                <tr>
+                    <td class="label">
+                        分类名称：
+                    </td>
+                    <td>
+                        <input type="text" name="name" value="<?php echo $data['name']; ?>"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">上级分类：</td>
+                    <td>
+                        <select name="pid">
+                            <option value="0">顶级分类</option>
+                            <foreach name="lst" item="lo">
+                                <if condition="$lo.none neq 1">
+                                    <option value="{$lo.id}" <eq name="data['pid']" value="$lo.id">selected="selected"</eq>>{$lo.name}</option>
+                                </if>
+                            </foreach>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="99" align="center">
+                        <input type="submit" class="button" value=" 确定 "/>
+                        <input type="reset" class="button" value=" 重置 "/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<script type="application/javascript">
+</script>

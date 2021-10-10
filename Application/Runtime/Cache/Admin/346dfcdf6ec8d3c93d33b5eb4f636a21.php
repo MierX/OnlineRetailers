@@ -21,7 +21,13 @@
 </h1>
 
 <!--  内容  -->
+<!--suppress JSJQueryEfficiency -->
 
+<style>
+    #goods_cat_lst li {
+        margin: 5px;
+    }
+</style>
 <div class="main-div">
     <div id="tabbar-div">
         <p>
@@ -38,6 +44,29 @@
                 <td class="label">所属品牌：</td>
                 <td>
                     <?php echo buildSelect('brands', 'brand_id', 'id', 'brand_name', '');?>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">主分类：</td>
+                <td>
+                    <select name="cat_id">
+                        <option value="">选择分类</option>
+                        <?php if(is_array($catData)): foreach($catData as $key=>$co): ?><option value="<?php echo ($co["id"]); ?>"><?php echo ($co["name"]); ?></option><?php endforeach; endif; ?>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">扩展分类</td>
+                <td>
+                    <ul id="goods_cat_lst">
+                        <li>
+                            <select name="goods_cat[]">
+                                <option value="">选择分类</option>
+                                <?php if(is_array($catData)): foreach($catData as $key=>$co): ?><option value="<?php echo ($co["id"]); ?>"><?php echo ($co["name"]); ?></option><?php endforeach; endif; ?>
+                            </select>
+                        </li>
+                    </ul>
+                    <button onclick="$('#goods_cat_lst').append($('#goods_cat_lst').find('li').eq(0).clone());" type="button" id="btn_add_cat">添加</button>
                 </td>
             </tr>
             <tr>

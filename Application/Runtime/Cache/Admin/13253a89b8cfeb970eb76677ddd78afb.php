@@ -29,7 +29,7 @@
         </p>
     </div>
     <div id="tabbody-div">
-        <form name="main_form" method="POST" action="/index.php/Admin/Brands/edit/id/1/p/1.html" enctype="multipart/form-data">
+        <form name="main_form" method="POST" action="/index.php/Admin/Brands/edit/id/1.html" enctype="multipart/form-data">
             <input type="hidden" name="id" value="<?php echo I('get.id'); ?>"/>
             <input type="hidden" name="old_logo" value="<?php echo $data['logo']; ?>"/>
             <input type="hidden" name="old_sm_logo" value="<?php echo $data['sm_logo']; ?>"/>

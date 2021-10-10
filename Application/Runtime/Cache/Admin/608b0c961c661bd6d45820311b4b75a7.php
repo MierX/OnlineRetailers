@@ -21,7 +21,13 @@
 </h1>
 
 <!--  内容  -->
+<!--suppress JSJQueryEfficiency -->
 
+<style>
+    #goods_cat_lst li {
+        margin: 5px;
+    }
+</style>
 <div class="tab-div">
     <div id="tabbar-div">
         <p>
@@ -29,7 +35,7 @@
         </p>
     </div>
     <div id="tabbody-div">
-        <form name="main_form" method="POST" action="/index.php/Admin/Goods/edit/id/1.html" enctype="multipart/form-data">
+        <form name="main_form" method="POST" action="/index.php/Admin/Goods/edit/id/8.html" enctype="multipart/form-data">
             <input type="hidden" name="id" value="<?php echo I('get.id'); ?>"/>
             <input type="hidden" name="old_logo" value="<?php echo $data['logo']; ?>"/>
             <input type="hidden" name="old_sm_logo" value="<?php echo $data['sm_logo']; ?>"/>
@@ -49,6 +55,36 @@
                     <td class="label">所属品牌：</td>
                     <td>
                         <?php echo buildSelect('brands', 'brand_id', 'id', 'brand_name', $data['brand_id']);?>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">主分类：</td>
+                    <td>
+                        <select name="cat_id">
+                            <option value="">选择分类</option>
+                            <?php if(is_array($catData)): foreach($catData as $key=>$co): ?><option value="<?php echo ($co["id"]); ?>" <?php if(($co["id"]) == $data['cat_id']): ?>selected="selected"<?php endif; ?>><?php echo ($co["name"]); ?></option><?php endforeach; endif; ?>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">扩展分类</td>
+                    <td>
+                        <ul id="goods_cat_lst">
+                            <?php if(!empty($goodsCat)): if(is_array($goodsCat)): foreach($goodsCat as $key=>$go): ?><li>
+                                        <select name="goods_cat[]">
+                                            <option value="">选择分类</option>
+                                            <?php if(is_array($catData)): foreach($catData as $key=>$co): ?><option value="<?php echo ($co["id"]); ?>" <?php if(($co["id"]) == $go['cat_id']): ?>selected="selected"<?php endif; ?>><?php echo ($co["name"]); ?></option><?php endforeach; endif; ?>
+                                        </select>
+                                    </li><?php endforeach; endif; ?>
+                            <?php else: ?>
+                                <li>
+                                    <select name="goods_cat[]">
+                                        <option value="">选择分类</option>
+                                        <?php if(is_array($catData)): foreach($catData as $key=>$co): ?><option value="<?php echo ($co["id"]); ?>"><?php echo ($co["name"]); ?></option><?php endforeach; endif; ?>
+                                    </select>
+                                </li><?php endif; ?>
+                        </ul>
+                        <button onclick="$('#goods_cat_lst').append($('#goods_cat_lst').find('li').eq(0).clone());" type="button" id="btn_add_cat">添加</button>
                     </td>
                 </tr>
                 <tr>

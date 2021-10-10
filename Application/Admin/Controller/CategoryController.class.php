@@ -4,7 +4,7 @@ namespace Admin\Controller;
 
 use Think\Controller;
 
-class goodsController extends Controller
+class CategoryController extends Controller
 {
 
     private $model;
@@ -14,7 +14,7 @@ class goodsController extends Controller
         parent::__construct();
 
         // 接收模型并保存到模型中
-        $this->model = D('goods');
+        $this->model = D('category');
     }
 
     /**
@@ -35,16 +35,15 @@ class goodsController extends Controller
             $this->error($this->model->getError());
         }
 
-        $catData = [];
-        D('category')->getChildren($catData, 0);
+        $data = [];
+        $this->model->getChildren($data, 0);
 
         // 显示表单页面
         $this->assign([
-            '_page_btn_name' => '商品列表',
-            '_page_title' => '添加商品页',
+            'data' => $data,
+            '_page_btn_name' => '商品分类列表',
+            '_page_title' => '添加商品分类页',
             '_page_btn_link' => U('lst'),
-            'level' => D('member_level')->field('id, level_name')->select(),
-            'catData' => $catData,
         ]);
         $this->display();
     }
@@ -54,19 +53,15 @@ class goodsController extends Controller
      */
     public function lst()
     {
-        // 返回数据和翻页
-        $data = $this->model->search();
-
-        $catData = [];
-        D('category')->getChildren($catData, 0);
+        $data = [];
+        $this->model->getChildren($data, 0);
 
         // 显示列表页
-        $this->assign($data);
         $this->assign([
-            '_page_btn_name' => '添加商品',
-            '_page_title' => '商品列表页',
+            'data' => $data,
+            '_page_btn_name' => '添加商品分类',
+            '_page_title' => '商品分类列表页',
             '_page_btn_link' => U('add'),
-            'catData' => $catData,
         ]);
         $this->display();
     }
@@ -88,18 +83,27 @@ class goodsController extends Controller
             $this->error($this->model->getError());
         }
 
-        $catData = [];
-        D('category')->getChildren($catData, 0);
+        $id = I('get.id', 0);
+        $data = [];
+        $this->model->getChildren($data, 0);
+        $_data = [];
+        $this->model->getChildren($_data, $id);
+        $_data = array_column($_data, 'id');
+        foreach ($data as &$v) {
+            if (in_array($v['id'], $_data) || $v['id'] == $id) {
+                $v['none'] = 1;
+            } else {
+                $v['none'] = 0;
+            }
+        }
 
         // 设置页面中的信息
-        $this->assign('data', $this->model->find(I('get.id', 0)));
         $this->assign([
-            '_page_btn_name' => '商品列表',
-            '_page_title' => '编辑商品页',
+            'data' => $this->model->find($id),
+            'lst' => $data,
+            '_page_btn_name' => '商品分类列表',
+            '_page_title' => '编辑商品分类页',
             '_page_btn_link' => U('lst'),
-            'brands' => M('brands')->field('id, brand_name')->select(),
-            'catData' => $catData,
-            'goodsCat' => M('goods_cat')->field('cat_id')->where(['goods_id' => I('get.id')])->select(),
         ]);
         $this->display();
     }
