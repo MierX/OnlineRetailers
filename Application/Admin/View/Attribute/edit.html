@@ -1,0 +1,60 @@
+<layout name="layout"/>
+<div class="tab-div">
+    <div id="tabbar-div">
+        <p>
+            <span class="tab-front" id="general-tab">通用信息</span>
+        </p>
+    </div>
+    <div id="tabbody-div">
+        <form name="main_form" method="POST" action="__SELF__" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="<?php echo I('get.id'); ?>"/>
+            <table width="90%" id="general-table" align="center">
+                <tr>
+                    <td class="label">
+                        属性名称：
+                    </td>
+                    <td>
+                        <input type="text" name="attr_name" value="<?php echo $data['attr_name']; ?>"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">
+                        属性类型：
+                    </td>
+                    <td>
+                        <input type="radio" name="attr_type"
+                               value="唯一" <?php if($data['attr_type'] == '唯一') echo 'checked="checked"'; ?> />
+                        唯一 <input type="radio" name="attr_type"
+                                  value="可选" <?php if($data['attr_type'] == '可选') echo 'checked="checked"'; ?> />
+                        可选
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">
+                        属性值：
+                    </td>
+                    <td>
+                        <textarea name="attr_values"><?php echo $data['attr_values']; ?></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">
+                        类型id：
+                    </td>
+                    <td>
+                        {:buildSelect('type', 'type_id', 'id', 'type_name', I('get.type_id'))}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="99" align="center">
+                        <input type="submit" class="button" value=" 确定 "/>
+                        <input type="reset" class="button" value=" 重置 "/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<script type="application/javascript">
+</script>

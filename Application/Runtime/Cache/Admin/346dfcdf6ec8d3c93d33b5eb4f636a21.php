@@ -38,7 +38,7 @@
             <span class="tab-back">商品相册</span>
         </p>
     </div>
-    <form name="main_form" method="POST" action="/index.php/Admin/Goods/add" enctype="multipart/form-data">
+    <form name="main_form" method="POST" action="/index.php/Admin/Goods/add.html" enctype="multipart/form-data">
         <table cellspacing="1" cellpadding="3" width="100%" class="tab">
             <tr>
                 <td class="label">所属品牌：</td>
@@ -66,7 +66,9 @@
                             </select>
                         </li>
                     </ul>
-                    <button onclick="$('#goods_cat_lst').append($('#goods_cat_lst').find('li').eq(0).clone());" type="button" id="btn_add_cat">添加</button>
+                    <button onclick="$('#goods_cat_lst').append($('#goods_cat_lst').find('li').eq(0).clone());"
+                            type="button" id="btn_add_cat">添加
+                    </button>
                 </td>
             </tr>
             <tr>
@@ -91,6 +93,14 @@
                 <td>
                     <input type="radio" name="is_on_sale" value="是" checked="checked"/>
                     是 <input type="radio" name="is_on_sale" value="否"/>
+                    否
+                </td>
+            </tr>
+            <tr>
+                <td class="label">是否放到回收站：</td>
+                <td>
+                    <input type="radio" name="is_delete" value="是"/>
+                    是 <input type="radio" name="is_delete" value="否" checked="checked"/>
                     否
                 </td>
             </tr>
@@ -131,11 +141,14 @@
         </table>
         <table cellspacing="1" cellpadding="3" width="100%" class="tab" style="display: none">
             <tr>
-                <td class="label">是否放到回收站：</td>
+                <td class="label">类型：</td>
                 <td>
-                    <input type="radio" name="is_delete" value="是"/>
-                    是 <input type="radio" name="is_delete" value="否" checked="checked"/>
-                    否
+                    <?php echo buildSelect('type', 'type_id', 'id', 'type_name');?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <ul id="attr_list"></ul>
                 </td>
             </tr>
             <tr>
@@ -177,6 +190,57 @@
         $(this).removeClass('tab-back').addClass('tab-front').siblings().removeClass('tab-front').addClass('tab-back');
         $('.tab').eq(i).show().siblings().hide();
     })
+
+    $("select[name='type_id']").change(function () {
+        // 获取当前选中的类型id
+        let typeId = $(this).val();
+        let li = "";
+
+        if (typeId > 0) {
+            // 根据类型id执行ajax取出这个类型下的属性，冰获取返回的json数量
+            $.ajax({
+                type: "get",
+                url: "<?php echo U('getAttribute', '', false); ?>/type_id/" + typeId,
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    $(data).each(function (k, v) {
+                        li += '<li>';
+                        if (v.attr_type == '可选') {
+                            li += '<a onclick="addNewAttr(this)">[+]</a>'
+                        }
+                        li += v.attr_name + '：';
+                        if (v.attr_values == "") {
+                            li += '<input type="text" name="attr_value[' + v.id + ']" />';
+                        } else {
+                            li += '<select name="attr_value[' + v.id + '][]"><option value="">请选择</option>';
+                            // 把可选值根据逗号转换成数组
+                            let _attr = v.attr_values.split('，');
+                            for (let i = 0; i < _attr.length; ++i) {
+                                li += '<option value="' + _attr[i] + '">' + _attr[i] + '</option>'
+                            }
+                            li += '</select>';
+                        }
+                        li += '</li>';
+                    });
+                }
+            });
+        }
+
+        $('#attr_list').html(li);
+    });
+
+    function addNewAttr(obj) {
+        let li = $(obj).parent();
+
+        if ($(obj).text() == '[+]') {
+            let newLi = li.clone();
+            newLi.find('a').text('[-]')
+            li.after(newLi);
+        } else {
+            $(li).remove();
+        }
+    }
 </script>
 
 <div id="footer"> www.or.com</div>

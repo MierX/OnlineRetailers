@@ -8,9 +8,9 @@ use Think\Page;
 class goodsModel extends Model
 {
 
-    protected $insertFields = 'goods_name,market_price,shop_price,is_on_sale,is_delete,goods_desc,brand_id,cat_id';
+    protected $insertFields = 'goods_name,market_price,shop_price,is_on_sale,is_delete,goods_desc,brand_id,cat_id,type_id';
 
-    protected $updateFields = 'id,goods_name,market_price,shop_price,is_on_sale,is_delete,goods_desc,brand_id,cat_id';
+    protected $updateFields = 'id,goods_name,market_price,shop_price,is_on_sale,is_delete,goods_desc,brand_id,cat_id,type_id';
 
     protected $_validate = [
         ['goods_name', 'require', '商品名称不能为空！', 1, 'regex', 3],
@@ -75,7 +75,7 @@ class goodsModel extends Model
         }
 
         $goodsCats = array_unique(I('post.goods_cat'));
-        foreach ($goodsCats as $k => $v) {
+        foreach ($goodsCats as $v) {
             if (empty($v) || !is_numeric($v)) {
                 continue;
             }
@@ -83,6 +83,30 @@ class goodsModel extends Model
                 'cat_id' => $v,
                 'goods_id' => $data['id'],
             ]);
+        }
+
+        $goodsAttrs = I('post.attr_value');
+        foreach ($goodsAttrs as $k => $v) {
+            if (is_array($v)) {
+                $_v = array_unique($v);
+                foreach ($_v as $_va) {
+                    if (!empty($_va)) {
+                        D('goods_attribute')->add([
+                            'attr_id' => $k,
+                            'attr_value' => $_va,
+                            'goods_id' => $data['id'],
+                        ]);
+                    }
+                }
+            } else {
+                if (!empty($v)) {
+                    D('goods_attribute')->add([
+                        'attr_id' => $k,
+                        'attr_value' => $v,
+                        'goods_id' => $data['id'],
+                    ]);
+                }
+            }
         }
     }
 
@@ -125,7 +149,7 @@ class goodsModel extends Model
 
         D('goods_cat')->where(['goods_id' => $options['where']['id']])->delete();
         $goodsCats = array_unique(I('post.goods_cat'));
-        foreach ($goodsCats as $k => $v) {
+        foreach ($goodsCats as $v) {
             if (empty($v) || !is_numeric($v)) {
                 continue;
             }
@@ -133,6 +157,46 @@ class goodsModel extends Model
                 'cat_id' => $v,
                 'goods_id' => $options['where']['id'],
             ]);
+        }
+
+        // 修改商品属性
+        $goodsAttrIds = I('post.goods_attr_id');
+        $goodsAttrValues = I('post.attr_value');
+        $index = 0;
+        foreach ($goodsAttrValues as $k => $v) {
+            if (is_array($v)) {
+                foreach ($v as $_v) {
+                    if (!empty($_v)) {
+                        if (empty($goodsAttrIds[$index])) {
+                            D('goods_attribute')->add([
+                                'goods_id' => $options['where']['id'],
+                                'attr_id' => $k,
+                                'attr_value' => $_v,
+                            ]);
+                        } else {
+                            D('goods_attribute')->where(['id' => $goodsAttrIds[$index]])->setField('attr_value', $_v);
+                        }
+                        $index++;
+                    } else {
+                        $index++;
+                    }
+                }
+            } else {
+                if (!empty($_v)) {
+                    if (empty($goodsAttrIds[$index])) {
+                        D('goods_attribute')->add([
+                            'goods_id' => $options['where']['id'],
+                            'attr_id' => $k,
+                            'attr_value' => $v,
+                        ]);
+                    } else {
+                        D('goods_attribute')->where(['id' => $goodsAttrIds[$index]])->setField('attr_value', $v);
+                    }
+                    $index++;
+                } else {
+                    $index++;
+                }
+            }
         }
 
         return true;
@@ -154,6 +218,8 @@ class goodsModel extends Model
 
         D('goods_cat')->where(['goods_id' => $options['where']['id']])->delete();
 
+        D('goods_attribute')->where(['goods_id' => $options['where']['id']])->delete();
+
         return true;
     }
 
@@ -166,7 +232,7 @@ class goodsModel extends Model
         D('category')->getChildren($catIds, $catId);
         $catId = [$catId];
         if (!empty($catIds)) {
-            $catId = array_merge($catId,array_column($catIds, 'id'));
+            $catId = array_merge($catId, array_column($catIds, 'id'));
         }
 
         $goodIds = $this->field('id')->where(['cat_id' => ['in', $catId]])->select() ?: [];

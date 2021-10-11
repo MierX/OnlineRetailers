@@ -20,12 +20,14 @@ SET NAMES utf8;
 #     mbig_logo    varchar(150)       not null default '' comment '更大图',
 #     brand_id     mediumint unsigned not null default '0' comment '品牌id',
 #     cat_id       mediumint unsigned not null default '0' comment '主分类id',
+#     type_id      mediumint unsigned not null default '0' comment '类型id',
 #     primary key (id),
 #     key shop_price (shop_price),
 #     key addtime (addtime),
 #     key brand_id (brand_id),
 #     key brand_id (cat_id),
-#     key is_on_sale (is_on_sale)
+#     key is_on_sale (is_on_sale),
+#     key type_id (type_id)
 # ) engine = InnoDB
 #   default charset = utf8 comment '商品表';
 #
@@ -93,3 +95,54 @@ SET NAMES utf8;
 #     key cat_id (cat_id)
 # ) engine = InnoDB
 #   default charset = utf8 comment '商品扩展分类';
+#
+# DROP TABLE IF EXISTS type;
+# CREATE TABLE type
+# (
+#     id        mediumint unsigned not null auto_increment comment 'id',
+#     type_name varchar(30)        not null comment '类型名称',
+#     addtime   datetime           not null default CURRENT_TIMESTAMP comment '创建时间',
+#     primary key (id)
+# ) engine = InnoDB
+#   default charset = utf8 comment '商品类型';
+#
+# DROP TABLE IF EXISTS attribute;
+# CREATE TABLE attribute
+# (
+#     id          mediumint unsigned not null auto_increment comment 'id',
+#     attr_name   varchar(30)        not null comment '属性名称',
+#     attr_type   enum ('唯一', '可选')  not null comment '属性类型',
+#     attr_values varchar(300)       not null default '' comment '属性值',
+#     type_id     mediumint unsigned not null comment '类型id',
+#     addtime     datetime           not null default CURRENT_TIMESTAMP comment '创建时间',
+#     primary key (id),
+#     key type_id (type_id)
+# ) engine = InnoDB
+#   default charset = utf8 comment '类型属性';
+#
+# DROP TABLE IF EXISTS goods_attribute;
+# CREATE TABLE goods_attribute
+# (
+#     id          mediumint unsigned not null auto_increment comment 'id',
+#     attr_id     mediumint unsigned not null comment '属性id',
+#     attr_values varchar(150)       not null default '' comment '属性值',
+#     goods_id    mediumint unsigned not null comment '商品id',
+#     addtime     datetime           not null default CURRENT_TIMESTAMP comment '创建时间',
+#     primary key (id),
+#     key attr_id (attr_id),
+#     key goods_id (goods_id)
+# ) engine = InnoDB
+#   default charset = utf8 comment '商品属性';
+#
+# DROP TABLE IF EXISTS goods_inventory;
+# CREATE TABLE goods_inventory
+# (
+#     id          mediumint unsigned not null auto_increment comment 'id',
+#     goods_id    mediumint unsigned not null comment '商品id',
+#     number      mediumint unsigned not null default 0 comment '库存量',
+#     attr_id     varchar(150) not null comment '属性id，有多个则会用逗号隔开',
+#     addtime     datetime           not null default CURRENT_TIMESTAMP comment '创建时间',
+#     primary key (id),
+#     key goods_id (goods_id)
+# ) engine = InnoDB
+#   default charset = utf8 comment '商品属性';
