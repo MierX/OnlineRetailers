@@ -133,7 +133,7 @@
             <th
             >原图
             </th>
-            <th width="60">操作</th>
+            <th width="100">操作</th>
         </tr>
         <?php foreach ($data as $k => $v): ?>
         <tr class="tron">
@@ -168,6 +168,9 @@
                 <span><?php showImage($v['sm_logo']); ?></span>
             </td>
             <td align="center">
+                <a href="<?php echo U('goodsInventory?id='.$v['id'].'&p='.I('get.p')); ?>" title="库存量">
+                    <img src="/Public/Admin/Images/icon_send_bonus.gif" width="16" height="16" border="0" alt=""/>
+                </a>
                 <a href="<?php echo U('info?id='.$v['id'].'&p='.I('get.p')); ?>"
                    target="_blank" title="查看">
                     <img src="/Public/Admin/Images/icon_view.gif" width="16" height="16" border="0" alt=""/>

@@ -4,7 +4,7 @@ namespace Admin\Controller;
 
 use Think\Controller;
 
-class BrandsController extends Controller
+class AdminController extends Controller
 {
 
     private $model;
@@ -14,7 +14,7 @@ class BrandsController extends Controller
         parent::__construct();
 
         // 接收模型并保存到模型中
-        $this->model = D('brands');
+        $this->model = D('admin');
     }
 
     /**
@@ -37,8 +37,8 @@ class BrandsController extends Controller
 
         // 显示表单页面
         $this->assign([
-            '_page_btn_name' => '品牌列表',
-            '_page_title' => '添加品牌页',
+            '_page_btn_name' => '管理员列表',
+            '_page_title' => '添加管理员页',
             '_page_btn_link' => U('lst'),
         ]);
         $this->display();
@@ -55,8 +55,8 @@ class BrandsController extends Controller
         // 显示列表页
         $this->assign($data);
         $this->assign([
-            '_page_btn_name' => '添加品牌',
-            '_page_title' => '品牌列表页',
+            '_page_btn_name' => '添加管理员',
+            '_page_title' => '管理员列表页',
             '_page_btn_link' => U('add'),
         ]);
         $this->display();
@@ -82,8 +82,8 @@ class BrandsController extends Controller
         // 设置页面中的信息
         $this->assign('data', $this->model->find(I('get.id', 0)));
         $this->assign([
-            '_page_btn_name' => '品牌列表',
-            '_page_title' => '编辑品牌页',
+            '_page_btn_name' => '管理员列表',
+            '_page_title' => '编辑管理员页',
             '_page_btn_link' => U('lst'),
         ]);
         $this->display();

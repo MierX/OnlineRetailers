@@ -146,3 +146,66 @@ SET NAMES utf8;
 #     key goods_id (goods_id)
 # ) engine = InnoDB
 #   default charset = utf8 comment '商品属性';
+#
+# DROP TABLE IF EXISTS privilege;
+# CREATE TABLE privilege
+# (
+#     id              mediumint unsigned not null auto_increment comment 'id',
+#     pri_name        varchar(150)       not null comment '权限名称',
+#     module_name     varchar(30)        not null default '' comment '模块名称',
+#     controller_name varchar(30)        not null default '' comment '控制器名称',
+#     action_name     varchar(30)        not null default '' comment '方法名称',
+#     parent_id       mediumint unsigned not null default 0 comment '上级权限id',
+#     addtime         datetime           not null default CURRENT_TIMESTAMP comment '创建时间',
+#     primary key (id)
+# ) engine = InnoDB
+#   default charset = utf8 comment '管理权限';
+#
+# DROP TABLE IF EXISTS role;
+# CREATE TABLE role
+# (
+#     id        mediumint unsigned not null auto_increment comment 'id',
+#     role_name varchar(150)       not null comment '角色名称',
+#     addtime   datetime           not null default CURRENT_TIMESTAMP comment '创建时间',
+#     primary key (id)
+# ) engine = InnoDB
+#   default charset = utf8 comment '管理角色';
+#
+# DROP TABLE IF EXISTS admin;
+# CREATE TABLE admin
+# (
+#     id       mediumint unsigned not null auto_increment comment 'id',
+#     username varchar(150)       not null comment '用户名',
+#     password char(32)           not null comment '密码',
+#     addtime  datetime           not null default CURRENT_TIMESTAMP comment '创建时间',
+#     primary key (id)
+# ) engine = InnoDB
+#   default charset = utf8 comment '管理员';
+# INSERT INTO admin(username, password)
+# VALUES ('root', MD5('admin'));
+#
+# DROP TABLE IF EXISTS role_pri;
+# CREATE TABLE role_pri
+# (
+#     id      mediumint unsigned not null auto_increment comment 'id',
+#     pri_id  mediumint unsigned not null comment '权限id',
+#     role_id mediumint unsigned not null comment '角色id',
+#     addtime datetime           not null default CURRENT_TIMESTAMP comment '创建时间',
+#     primary key (id),
+#     key role_id (role_id),
+#     key pri_id (pri_id)
+# ) engine = InnoDB
+#   default charset = utf8 comment '角色权限';
+#
+# DROP TABLE IF EXISTS admin_role;
+# CREATE TABLE admin_role
+# (
+#     id       mediumint unsigned not null auto_increment comment 'id',
+#     admin_id mediumint unsigned not null comment '管理员id',
+#     role_id  mediumint unsigned not null comment '角色id',
+#     addtime  datetime           not null default CURRENT_TIMESTAMP comment '创建时间',
+#     primary key (id),
+#     key role_id (role_id),
+#     key admin_id (admin_id)
+# ) engine = InnoDB
+#   default charset = utf8 comment '管理员角色';

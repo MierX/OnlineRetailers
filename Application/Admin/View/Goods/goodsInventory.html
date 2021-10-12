@@ -1,0 +1,69 @@
+<layout name="layout"/>
+<div class="list-div" id="listDiv">
+    <form name="" method="POST" action="__SELF__">
+        <table cellpadding="3" cellspacing="1">
+            <input type="hidden" name="goods_id" value="{$goods_id}" />
+            <tr>
+                <foreach name="data" key="dk" item="do">
+                    <th>{$dk}</th>
+                </foreach>
+                <th width="120">库存量</th>
+                <th width="60">操作</th>
+            </tr>
+            <notempty name="inventory">
+                <foreach name="inventory" key="ik" item="io">
+                    <tr class="tron">
+                        <foreach name="data" item="do">
+                            <td align="center">
+                                <select name="attr_id[]">
+                                    <option value="">请选择</option>
+                                    <?php $attrIdArr = explode(',', $io['attr_id']) ?>
+                                    <foreach name="do" item="dv">
+                                        <if condition="in_array($dv['id'], $attrIdArr)">
+                                            <option value="{$dv['id']}" selected="selected">{$dv['attr_value']}</option>
+                                            <else />
+                                            <option value="{$dv['id']}">{$dv['attr_value']}</option>
+                                        </if>
+                                    </foreach>
+                                </select>
+                            </td>
+                        </foreach>
+                        <td align="center"><input type="text" name="number[]" value="{$io['number']}" /></td>
+                        <td align="center"><button type="button" onclick="addNewTr(this)">+</button></td>
+                    </tr>
+                </foreach>
+            <else />
+                <tr class="tron">
+                    <foreach name="data" item="do">
+                        <td align="center">
+                            <select name="attr_id[]">
+                                <option value="">请选择</option>
+                                <foreach name="do" item="dv">
+                                    <option value="{$dv['id']}">{$dv['attr_value']}</option>
+                                </foreach>
+                            </select>
+                        </td>
+                    </foreach>
+                    <td align="center"><input type="text" name="number[]" value="" /></td>
+                    <td align="center"><button type="button" onclick="addNewTr(this)">+</button></td>
+                </tr>
+            </notempty>
+            <tr id="submit">
+                <td align="center" colspan="{:(count($data) + 2)}"><button type="submit">提交</button></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/Admin/Js/tron.js"></script>
+<script>
+    function addNewTr(obj) {
+        let tr = $(obj).parent().parent();
+        if ($(obj).text() == '+') {
+            let newTr = tr.clone();
+            newTr.find('button').text('-');
+            $('#submit').before(newTr);
+        } else {
+            tr.remove();
+        }
+    }
+</script>

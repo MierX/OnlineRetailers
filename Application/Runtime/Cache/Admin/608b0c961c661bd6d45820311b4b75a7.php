@@ -39,7 +39,7 @@
             <span class="tab-back">商品相册</span>
         </p>
     </div>
-    <form name="main_form" method="POST" action="/index.php/Admin/Goods/edit/id/12/p/1.html" enctype="multipart/form-data">
+    <form name="main_form" method="POST" action="/index.php/Admin/Goods/edit/id/8.html" enctype="multipart/form-data">
         <input type="hidden" name="id" value="<?php echo I('get.id'); ?>"/>
         <input type="hidden" name="old_logo" value="<?php echo $data['logo']; ?>"/>
         <input type="hidden" name="old_sm_logo" value="<?php echo $data['sm_logo']; ?>"/>

@@ -184,4 +184,62 @@ class goodsController extends Controller
         }
         echo json_encode(['code' => $rs], 256);
     }
+
+    /**
+     * 设置商品库存量
+     */
+    public function goodsInventory()
+    {
+        $goods_id = I('get.id');
+
+        // 判断是否有表单提交
+        if (IS_POST) {
+            $goods_id = I('post.goods_id');
+            $attrIds = I('post.attr_id');
+            $numbers = I('post.number');
+            $attrIds = array_chunk($attrIds, count($attrIds) / count($numbers));
+            if (count($attrIds) === count($numbers) && count($numbers) !== 0) {
+                D('goods_inventory')->where(['goods_id' => $goods_id])->delete();
+                foreach ($numbers as $k => $v) {
+                    sort($attrIds[$k], SORT_NUMERIC);
+                    D('goods_inventory')->add([
+                        'goods_id' => $goods_id,
+                        'number' => $v,
+                        'attr_id' => implode(',', $attrIds[$k]),
+                    ]);
+                }
+                $this->success('修改成功！', U('lst', ['p' => I('get.p', 1)]));
+            }
+        }
+
+        // 获取商品已有的库存量
+        $inventory = D('goods_inventory')
+            ->field('id, number, attr_id')
+            ->where(['goods_id' => $goods_id])
+            ->select();
+
+        // 获取商品所有可选属性
+        $data = D('goods_attribute')
+            ->alias('a')
+            ->field('a.id, a.attr_id, a.attr_value, b.attr_name')
+            ->join('attribute b on b.id = a.attr_id', 'LEFT')
+            ->where(['a.goods_id' => $goods_id, 'b.attr_type' => '可选'])
+            ->select();
+
+        // 处理数据转化成三维，把属性相同的放到一起
+        $_data = [];
+        foreach ($data as $k => $v) {
+            $_data[$v['attr_name']][] = $v;
+        }
+
+        $this->assign([
+            '_page_btn_name' => '商品列表',
+            '_page_title' => '商品库存量',
+            '_page_btn_link' => U('lst'),
+            'data' => $_data,
+            'goods_id' => $goods_id,
+            'inventory' => $inventory,
+        ]);
+        $this->display();
+    }
 }

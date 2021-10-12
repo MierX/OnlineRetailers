@@ -1,0 +1,67 @@
+<layout name="layout"/>
+<div class="main-div">
+    <form name="main_form" method="POST" action="__SELF__" enctype="multipart/form-data">
+        <table cellspacing="1" cellpadding="3" width="100%">
+            <tr>
+                <td class="label">角色名称：</td>
+                <td>
+                    <input type="text" name="role_name" value=""/>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">权限列表：</td>
+                <td>
+                    <foreach name="priData" item="po">
+                        {:str_repeat('-', 8 * $po['level'])}
+                        <input type="checkbox" level_id="{$po.level}" name="pri_id[]" value="{$po.id}"/>{$po.pri_name}
+                        <br/>
+                    </foreach>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="99" align="center">
+                    <input type="submit" class="button" value=" 确定 "/>
+                    <input type="reset" class="button" value=" 重置 "/>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script type="application/javascript">
+    // 为所有的复选框绑定一个事件
+    $(':checkbox').click(function () {
+        let level_id = $(this).attr('level_id');
+        let tmp_level_id = level_id;
+
+        // 判断是选中还是取消
+        if ($(this).prop('checked')) {
+            // 所有的子权限也选中
+            $(this).nextAll(":checkbox").each(function (k, v) {
+                if ($(v).attr('level_id') > level_id) {
+                    $(v).attr('checked', 'checked');
+                } else {
+                    return false;
+                }
+            });
+
+            // 所有的上级也选中
+            $(this).prevAll(":checkbox").each(function (k, v) {
+                if ($(v).attr('level_id') < tmp_level_id) {
+                    $(v).attr('checked', 'checked');
+                    tmp_level_id--;
+                } else {
+                    return false;
+                }
+            })
+        } else {
+            // 所有的子权限也取消
+            $(this).nextAll(":checkbox").each(function (k, v) {
+                if ($(v).attr('level_id') > level_id) {
+                    $(v).attr('checked', false);
+                } else {
+                    return false;
+                }
+            });
+        }
+    });
+</script>

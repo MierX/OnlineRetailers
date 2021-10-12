@@ -1,0 +1,48 @@
+<layout name="layout"/>
+<div class="tab-div">
+    <div id="tabbar-div">
+        <p>
+            <span class="tab-front" id="general-tab">通用信息</span>
+        </p>
+    </div>
+    <div id="tabbody-div">
+        <form name="main_form" method="POST" action="__SELF__" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="<?php echo I('get.id'); ?>" />
+                        <table width="90%" id="general-table" align="center">
+                                                    <tr>
+                        <td class="label">
+                            用户名：
+                        </td>
+                        <td>
+                                                            <input  type="text" name="username" value="<?php echo $data['username']; ?>" />
+                                                    </td>
+                    </tr>
+                                    <tr>
+                        <td class="label">
+                            密码：
+                        </td>
+                        <td>
+                                                            <input type="password" size="25" name="password"/>
+                                                    </td>
+                    </tr>
+                                    <tr>
+                        <td class="label">
+                            确认密码：
+                        </td>
+                        <td>
+                                                            <input type="password" size="25" name="c_password"/>
+                                                    </td>
+                    </tr>
+                                <tr>
+                    <td colspan="99" align="center">
+                        <input type="submit" class="button" value=" 确定 "/>
+                        <input type="reset" class="button" value=" 重置 "/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<script type="application/javascript">
+        </script>
