@@ -2,9 +2,8 @@
 
 namespace Admin\Controller;
 
-use Think\Controller;
 
-class BrandsController extends Controller
+class BrandsController extends BaseController
 {
 
     private $model;

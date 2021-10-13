@@ -1,0 +1,114 @@
+<layout name="layout"/>
+<?php if($config['search']): ?>
+<div class="form-div">
+    <form action="__ACTION__" method="GET" name="searchForm">
+        <img src="__PUBLIC__/Admin/Images/icon_search.gif" width="26" height="22" border="0" alt="search"/>
+        <?php foreach ($config['search'] as $k => $v): ?>
+        <p>
+            <?php echo $v[4]; ?>：
+            <?php if($v[1] == 'normal'): ?>
+            <input type="text" name="<?php echo $v[0]; ?>" size="30" value="<?php echo "<?php echo I('get.{$v[0]}'); ?>
+            "; ?>" />
+            <?php elseif(strpos($v[1], 'between') === 0): $_arr = explode(',', $v[2]);?>
+            从
+            <input id="<?php echo $_arr[0]; ?>" type="text" name="<?php echo $_arr[0]; ?>" size="15"
+                   value="<?php echo "<?php echo I('get.{$_arr[0]}'); ?>"; ?>" />
+            到
+            <input id="<?php echo $_arr[1]; ?>" type="text" name="<?php echo $_arr[1]; ?>" size="15"
+                   value="<?php echo "<?php echo I('get.{$_arr[1]}'); ?>"; ?>" />
+            <?php elseif($v[1] == 'in'): ?>
+            <input type="radio" value="-1"
+                   name="<?php echo $v[0]; ?>" <?php echo "<?php if(I('get.{$v[0]}', -1) == -1) echo 'checked=\"checked\"'; ?>
+            "; ?> />
+            全部
+            <?php $_arr = explode(',', $v[2]);foreach ($_arr as $v1): $_v2 = explode('-', $v1); ?>
+            <input type="radio" value="<?php echo $_v2[0]; ?>"
+                   name="<?php echo $v[0]; ?>" <?php echo "<?php if(I('get.{$v[0]}', -1) == '{$_v2[0]}') echo 'checked=\"checked\"'; ?>
+            "; ?> />
+            <?php echo $_v2[1]; ?>
+            <?php endforeach; ?>
+            <?php endif; ?>
+        </p>
+        <?php endforeach; ?>
+        <input type="submit" value=" 搜索 " class="button"/>
+    </form>
+</div><?php endif; ?>
+<div class="list-div" id="listDiv">
+    <table cellpadding="3" cellspacing="1">
+        <tr>
+            <?php foreach ($config['fields'] as $k => $v): ?>
+            <th
+            <?php if($k == 'order_num' || (strpos($v['Type'], 'enum') !== FALSE)) echo 'width="40"'; ?><?php if(strpos($v['Type'], 'time') !== FALSE) echo ' width="120"'; ?>
+            ><?php echo $v['text']; ?></th>
+            <?php endforeach; ?>
+            <th width="60">操作</th>
+        </tr>
+        <?php echo '<?php foreach ($data as $k => $v): ?>'; ?>
+        <tr class="tron">
+            <?php foreach ($config['fields'] as $k => $v): ?>
+            <?php if(preg_match('/(image|logo|face|img|pic)/', $k)): ?>
+            <td align="center">
+                <span><?php echo "<?php showImage(\$v['sm_{$k}']); ?>"; ?></span>
+            </td>
+            <?php else: ?>
+            <td align="center">
+                <?php if($config['digui']==1 && $config['diguiName']==$k) echo "<?php echo str_repeat('-', 8*\$v['level']); ?>
+                "; ?>
+                <span><?php echo "<?php echo \$v['$k']; ?>"; ?></span>
+            </td>
+            <?php endif; ?>
+            <?php endforeach; ?>
+            <td align="center">
+                <a href="<?php echo '<?php echo U(\'info?'.$config['pk'].'=\'.$v[\''.$config['pk'].'\'].\'&p=\'.I(\'get.p\')); ?>'; ?>"
+                   target="_blank" title="查看">
+                    <img src="__PUBLIC__/Admin/Images/icon_view.gif" width="16" height="16" border="0" alt=""/>
+                </a>
+                <a href="<?php echo '<?php echo U(\'edit?'.$config['pk'].'=\'.$v[\''.$config['pk'].'\'].\'&p=\'.I(\'get.p\')); ?>'; ?>"
+                   title="编辑">
+                    <img src="__PUBLIC__/Admin/Images/icon_edit.gif" width="16" height="16" border="0" alt=""/>
+                </a>
+                <a href="<?php echo '<?php echo U(\'del?'.$config['pk'].'=\'.$v[\''.$config['pk'].'\'].\'&p=\'.I(\'get.p\')); ?>'; ?>"
+                   onclick="return confirm('确定要删除吗')" title="删除">
+                    <img src="__PUBLIC__/Admin/Images/icon_trash.gif" width="16" height="16" border="0" alt=""/>
+                </a>
+            </td>
+        </tr>
+        <?php echo '<?php endforeach; ?>'; ?>
+        <?php if($config['digui'] == 0): ?><?php echo "<?php if(preg_match('/\d/', \$page)): ?> "; ?>
+        <tr>
+            <td align="right" nowrap="true" colspan="99" height="30"><?php echo '<?php echo $page; ?>'; ?></td>
+        </tr>
+        <?php echo "<?php endif; ?>"; ?>
+        <?php endif; ?>
+    </table>
+</div>
+<?php
+foreach ($config['search'] as $k => $v){
+if($v[1] == 'betweenTime') {
+?>
+<link href="__PUBLIC__/datetimepicker/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/datetimepicker/jquery-ui-1.9.2.custom.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/datetimepicker/datepicker-zh_cn.js"></script>
+<link rel="stylesheet" media="all" type="text/css"
+      href="__PUBLIC__/datetimepicker/time/jquery-ui-timepicker-addon.min.css"/>
+<script type="text/javascript" src="__PUBLIC__/datetimepicker/time/jquery-ui-timepicker-addon.min.js"></script>
+<script type="text/javascript"
+        src="__PUBLIC__/datetimepicker/time/i18n/jquery-ui-timepicker-addon-i18n.min.js"></script>
+<script>$.timepicker.setDefaults($.timepicker.regional['zh-CN']);</script>
+<?php
+        break;
+    }
+}
+?>
+<script>
+    <?php
+    foreach ($config['search'] as $k => $v) {
+        if($v[1] == 'betweenTime') {
+            $_arr = explode(',', $v[2]);
+    echo "$('#{$_arr[0]}').datetimepicker(); ";
+    echo "$('#{$_arr[1]}').datetimepicker(); ";
+    }
+    }
+    ?>
+</script>
+<script type="text/javascript" src="__PUBLIC__/Admin/Js/tron.js"></script>

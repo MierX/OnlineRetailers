@@ -1,32 +1,25 @@
-<layout name="layout"/>
-<div class="tab-div">
-    <div id="tabbar-div">
-        <p>
-            <span class="tab-front" id="general-tab">通用信息</span>
-        </p>
-    </div>
-    <div id="tabbody-div">
-        <form name="main_form" method="POST" action="__SELF__" enctype="multipart/form-data">
-            <input type="hidden" name="id" value="<?php echo I('get.id'); ?>" />
-                        <table width="90%" id="general-table" align="center">
-                                                    <tr>
-                        <td class="label">
-                            类型名称：
-                        </td>
-                        <td>
-                                                            <input  type="text" name="type_name" value="<?php echo $data['type_name']; ?>" />
-                                                    </td>
-                    </tr>
-                                <tr>
-                    <td colspan="99" align="center">
-                        <input type="submit" class="button" value=" 确定 "/>
-                        <input type="reset" class="button" value=" 重置 "/>
-                    </td>
-                </tr>
-            </table>
-        </form>
-    </div>
+<layout name="layout" />
+
+<div class="main-div">
+    <form name="main_form" method="POST" action="__SELF__" enctype="multipart/form-data" >
+    	<input type="hidden" name="id" value="<?php echo $data['id']; ?>" />
+        <table cellspacing="1" cellpadding="3" width="100%">
+            <tr>
+                <td class="label">类型名称：</td>
+                <td>
+                    <input  type="text" name="type_name" value="<?php echo $data['type_name']; ?>" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="99" align="center">
+                    <input type="submit" class="button" value=" 确定 " />
+                    <input type="reset" class="button" value=" 重置 " />
+                </td>
+            </tr>
+        </table>
+    </form>
 </div>
 
-<script type="application/javascript">
-        </script>
+
+<script>
+</script>

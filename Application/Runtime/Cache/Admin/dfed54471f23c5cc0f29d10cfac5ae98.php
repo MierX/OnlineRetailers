@@ -29,7 +29,7 @@
         </p>
     </div>
     <div id="tabbody-div">
-        <form name="main_form" method="POST" action="/index.php/Admin/Category/edit/id/10.html" enctype="multipart/form-data">
+        <form name="main_form" method="POST" action="/index.php/Admin/Category/edit/id/19.html" enctype="multipart/form-data">
             <input type="hidden" name="id" value="<?php echo I('get.id'); ?>"/>
             <table width="90%" id="general-table" align="center">
                 <tr>
@@ -38,6 +38,15 @@
                     </td>
                     <td>
                         <input type="text" name="name" value="<?php echo $data['name']; ?>"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">推荐到楼层：</td>
+                    <td>
+                        <input type="radio" name="is_floor"
+                               value="是" <?php if($data['is_floor'] == '是') echo 'checked="checked"'; ?> /> 是
+                        <input type="radio" name="is_floor"
+                               value="否" <?php if($data['is_floor'] == '否') echo 'checked="checked"'; ?> /> 否
                     </td>
                 </tr>
                 <tr>

@@ -23,7 +23,7 @@
 <!--  内容  -->
 
 <div class="list-div" id="listDiv">
-    <form name="" method="POST" action="/index.php/Admin/Goods/goodsInventory/id/8.html">
+    <form name="" method="POST" action="/index.php/Admin/Goods/goodsInventory/id/12.html">
         <table cellpadding="3" cellspacing="1">
             <input type="hidden" name="goods_id" value="<?php echo ($goods_id); ?>" />
             <tr>

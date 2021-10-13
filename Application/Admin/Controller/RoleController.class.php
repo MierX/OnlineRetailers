@@ -1,105 +1,104 @@
 <?php
-
 namespace Admin\Controller;
-
-use Think\Controller;
-
-class RoleController extends Controller
+class RoleController extends BaseController 
 {
-
-    private $model;
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        // 接收模型并保存到模型中
-        $this->model = D('role');
-    }
-
-    /**
-     * 添加商品
-     */
     public function add()
     {
-        // 判断是否有表单提交
-        if (IS_POST) {
-            if ($this->model->create(I('post.'), 1)) {
-                // 插入到数据库
-                if ($this->model->add()) {
-                    $this->success('添加成功！', U('lst?p=' . I('get.p')));
-                    exit;
-                }
-            }
-            // 显示失败信息
-            $this->error($this->model->getError());
-        }
+    	if(IS_POST)
+    	{
+    		//var_dump($_POST);die;
+    		$model = D('Role');
+    		if($model->create(I('post.'), 1))
+    		{
+    			if($id = $model->add())
+    			{
+    				$this->success('添加成功！', U('lst?p='.I('get.p')));
+    				exit;
+    			}
+    		}
+    		$this->error($model->getError());
+    	}
+    	
+    	// 取出所有的权限
+    	$priModel = D('privilege');
+    	$priData = $priModel->getTree();
 
-        // 显示表单页面
-        $this->assign([
-            '_page_btn_name' => '管理角色列表',
-            '_page_title' => '添加管理角色页',
-            '_page_btn_link' => U('lst'),
-            'priData' => D('privilege')->getTree(),
-        ]);
-        $this->display();
+		// 设置页面中的信息
+		$this->assign(array(
+			'priData' => $priData,
+			'_page_title' => '添加角色',
+			'_page_btn_name' => '角色列表',
+			'_page_btn_link' => U('lst'),
+		));
+		$this->display();
     }
-
-    /**
-     * 商品列表页
-     */
-    public function lst()
-    {
-        // 返回数据和翻页
-        $data = $this->model->search();
-
-        // 显示列表页
-        $this->assign($data);
-        $this->assign([
-            '_page_btn_name' => '添加管理角色',
-            '_page_title' => '管理角色列表页',
-            '_page_btn_link' => U('add'),
-        ]);
-        $this->display();
-    }
-
-    /**
-     * 修改商品
-     */
     public function edit()
     {
-        // 判断是否有表单提交
-        if (IS_POST) {
-            if ($this->model->create(I('post.'), 2)) {
-                if ($this->model->save() !== false) {
-                    $this->success('修改成功！', U('lst', ['p' => I('get.p', 1)]));
-                    exit;
-                }
-            }
-            // 显示失败信息
-            $this->error($this->model->getError());
-        }
+    	$id = I('get.id');
+    	if(IS_POST)
+    	{
+    		$model = D('Role');
+    		if($model->create(I('post.'), 2))
+    		{
+    			if($model->save() !== FALSE)
+    			{
+    				$this->success('修改成功！', U('lst', array('p' => I('get.p', 1))));
+    				exit;
+    			}
+    		}
+    		$this->error($model->getError());
+    	}
+    	$model = M('Role');
+    	$data = $model->find($id);
+    	$this->assign('data', $data);
+    	
+    	// 取出所有的权限
+    	$priModel = D('privilege');
+    	$priData = $priModel->getTree();
+    	// 取出当前角色已经拥有 的权限ID
+    	$rpModel = D('role_pri');
+    	$rpData = $rpModel->field('GROUP_CONCAT(pri_id) pri_id')->where(array(
+    		'role_id' => array('eq', $id),
+    	))->find();
 
-        // 设置页面中的信息
-        $this->assign('data', $this->model->find(I('get.id', 0)));
-        $this->assign([
-            '_page_btn_name' => '管理角色列表',
-            '_page_title' => '编辑管理角色页',
-            '_page_btn_link' => U('lst'),
-        ]);
-        $this->display();
+		// 设置页面中的信息
+		$this->assign(array(
+			'rpData' => $rpData['pri_id'],
+			'priData' => $priData,
+			'_page_title' => '修改角色',
+			'_page_btn_name' => '角色列表',
+			'_page_btn_link' => U('lst'),
+		));
+		$this->display();
     }
-
-    /**
-     * 删除商品
-     */
-    public function del()
+    public function delete()
     {
-        if ($this->model->delete(I('get.id', 0)) !== false) {
-            $this->success('删除成功！', U('lst', ['p' => I('get.p'), 1]));
-            exit;
-        } else {
-            $this->error('删除失败！原因：' . $this->model->getError());
-        }
+    	$model = D('Role');
+    	if($model->delete(I('get.id', 0)) !== FALSE)
+    	{
+    		$this->success('删除成功！', U('lst', array('p' => I('get.p', 1))));
+    		exit;
+    	}
+    	else 
+    	{
+    		$this->error($model->getError());
+    	}
+    }
+    public function lst()
+    {
+    	$model = D('Role');
+    	$data = $model->search();
+    	$this->assign(array(
+    		'data' => $data['data'],
+    		'page' => $data['page'],
+    	));
+
+		// 设置页面中的信息
+		$this->assign(array(
+			'_page_title' => '角色列表',
+			'_page_btn_name' => '添加角色',
+			'_page_btn_link' => U('add'),
+		));
+    	$this->display();
     }
 }

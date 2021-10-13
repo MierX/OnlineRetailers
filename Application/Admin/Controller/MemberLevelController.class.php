@@ -1,104 +1,87 @@
 <?php
-
 namespace Admin\Controller;
-
-use Think\Controller;
-
-class MemberLevelController extends Controller
+class MemberLevelController extends BaseController 
 {
-
-    private $model;
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        // 接收模型并保存到模型中
-        $this->model = D('member_level');
-    }
-
-    /**
-     * 添加商品
-     */
     public function add()
     {
-        // 判断是否有表单提交
-        if (IS_POST) {
-            if ($this->model->create(I('post.'), 1)) {
-                // 插入到数据库
-                if ($this->model->add()) {
-                    $this->success('添加成功！', U('lst?p=' . I('get.p')));
-                    exit;
-                }
-            }
-            // 显示失败信息
-            $this->error($this->model->getError());
-        }
+    	if(IS_POST)
+    	{
+    		$model = D('MemberLevel');
+    		if($model->create(I('post.'), 1))
+    		{
+    			if($id = $model->add())
+    			{
+    				$this->success('添加成功！', U('lst?p='.I('get.p')));
+    				exit;
+    			}
+    		}
+    		$this->error($model->getError());
+    	}
 
-        // 显示表单页面
-        $this->assign([
-            '_page_btn_name' => '会员级别列表',
-            '_page_title' => '添加会员级别页',
-            '_page_btn_link' => U('lst'),
-        ]);
-        $this->display();
+		// 设置页面中的信息
+		$this->assign(array(
+			'_page_title' => '添加会员级别',
+			'_page_btn_name' => '会员级别列表',
+			'_page_btn_link' => U('lst'),
+		));
+		$this->display();
     }
-
-    /**
-     * 商品列表页
-     */
-    public function lst()
-    {
-        // 返回数据和翻页
-        $data = $this->model->search();
-
-        // 显示列表页
-        $this->assign($data);
-        $this->assign([
-            '_page_btn_name' => '添加会员级别',
-            '_page_title' => '会员级别列表页',
-            '_page_btn_link' => U('add'),
-        ]);
-        $this->display();
-    }
-
-    /**
-     * 修改商品
-     */
     public function edit()
     {
-        // 判断是否有表单提交
-        if (IS_POST) {
-            if ($this->model->create(I('post.'), 2)) {
-                if ($this->model->save() !== false) {
-                    $this->success('修改成功！', U('lst', ['p' => I('get.p', 1)]));
-                    exit;
-                }
-            }
-            // 显示失败信息
-            $this->error($this->model->getError());
-        }
+    	$id = I('get.id');
+    	if(IS_POST)
+    	{
+    		$model = D('MemberLevel');
+    		if($model->create(I('post.'), 2))
+    		{
+    			if($model->save() !== FALSE)
+    			{
+    				$this->success('修改成功！', U('lst', array('p' => I('get.p', 1))));
+    				exit;
+    			}
+    		}
+    		$this->error($model->getError());
+    	}
+    	$model = M('MemberLevel');
+    	$data = $model->find($id);
+    	$this->assign('data', $data);
 
-        // 设置页面中的信息
-        $this->assign('data', $this->model->find(I('get.id', 0)));
-        $this->assign([
-            '_page_btn_name' => '会员级别列表',
-            '_page_title' => '编辑会员级别页',
-            '_page_btn_link' => U('lst'),
-        ]);
-        $this->display();
+		// 设置页面中的信息
+		$this->assign(array(
+			'_page_title' => '修改会员级别',
+			'_page_btn_name' => '会员级别列表',
+			'_page_btn_link' => U('lst'),
+		));
+		$this->display();
     }
-
-    /**
-     * 删除商品
-     */
-    public function del()
+    public function delete()
     {
-        if ($this->model->delete(I('get.id', 0)) !== false) {
-            $this->success('删除成功！', U('lst', ['p' => I('get.p'), 1]));
-            exit;
-        } else {
-            $this->error('删除失败！原因：' . $this->model->getError());
-        }
+    	$model = D('MemberLevel');
+    	if($model->delete(I('get.id', 0)) !== FALSE)
+    	{
+    		$this->success('删除成功！', U('lst', array('p' => I('get.p', 1))));
+    		exit;
+    	}
+    	else 
+    	{
+    		$this->error($model->getError());
+    	}
+    }
+    public function lst()
+    {
+    	$model = D('MemberLevel');
+    	$data = $model->search();
+    	$this->assign(array(
+    		'data' => $data['data'],
+    		'page' => $data['page'],
+    	));
+
+		// 设置页面中的信息
+		$this->assign(array(
+			'_page_title' => '会员级别列表',
+			'_page_btn_name' => '添加会员级别',
+			'_page_btn_link' => U('add'),
+		));
+    	$this->display();
     }
 }
