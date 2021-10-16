@@ -56,7 +56,7 @@ class GoodsModel extends Model
 			{
 				// 这个replace into可以实现同样的功能
 				// replace into ：如果记录存在就修改，记录不存在就添加。以主键字段来判断一条记录是否存在
-				//$gaModel->execute('REPLACE INTO goods_attr VALUES("'.$gaid[$_i].'","'.$v1.'","'.$k.'","'.$id.'")');
+				//$gaModel->execute('REPLACE INTO p39_goods_attr VALUES("'.$gaid[$_i].'","'.$v1.'","'.$k.'","'.$id.'")');
 				// 找这个属性值是否有id
 				
 				if($gaid[$_i] == '')
@@ -339,7 +339,7 @@ class GoodsModel extends Model
 		
 		/************** 取某一页的数据 ***************/
 		/**
-		 * SELECT a.*,b.brand_name FROM goods a LEFT JOIN brand b ON a.brand_id=b.id
+		 * SELECT a.*,b.brand_name FROM p39_goods a LEFT JOIN p39_brand b ON a.brand_id=b.id
 		 */
 		$data = $this->order("$orderby $orderway")                    // 排序
 		->field('a.*,b.brand_name,c.cat_name,GROUP_CONCAT(e.cat_name SEPARATOR "<br />") ext_cat_name')
@@ -489,6 +489,59 @@ class GoodsModel extends Model
 		->limit($limit)
 		->order('sort_num ASC')
 		->select();
+	}
+	
+	/**
+	 * 获取会员价格
+	 *
+	 * @param unknown_type $goodsId
+	 */
+	public function getMemberPrice($goodsId)
+	{
+		$today = date('Y-m-d H:i');
+		$levelId = session('level_id');
+		// 取出商品的促销价格
+		$promotePrice = $this->field('promote_price')->where(array(
+			'id' => array('eq', $goodsId),
+			'promote_price' => array('gt', 0),
+			'promote_start_date' => array('elt', $today),
+			'promote_end_date' => array('egt', $today),
+		))->find();
+		
+		// 判断会员有没有登录
+		if($levelId)
+		{
+			$mpModel = D('member_price');
+			$mpData = $mpModel->field('price')->where(array(
+				'goods_id' => array('eq', $goodsId),
+				'level_id' => array('eq', $levelId),
+			))->find();
+			// 这个级别有没有设置会员价格
+			if($mpData['price'])
+			{
+				if($promotePrice['promote_price'])
+					return min($promotePrice['promote_price'], $mpData['price']);
+				else 
+					return $mpData['price'];
+			}
+			else 
+			{
+				// 如果没有设置这个级别的价格就直接返回本店价格
+				$p = $this->field('shop_price')->find($goodsId);
+				if($promotePrice['promote_price'])
+					return min($promotePrice['promote_price'], $p['shop_price']);
+				else 
+					return $p['shop_price'];
+			}
+		}
+		else 
+		{
+			$p = $this->field('shop_price')->find($goodsId);
+			if($promotePrice['promote_price'])
+				return min($promotePrice['promote_price'], $p['shop_price']);
+			else 
+				return $p['shop_price'];
+		}
 	}
 }
 

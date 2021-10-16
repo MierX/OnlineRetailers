@@ -1,6 +1,6 @@
 <?php
 return array(
-	'tableName' => 'goods',    // 表名
+	'tableName' => 'p39_goods',    // 表名
 	'tableCnName' => '商品',  // 表的中文名
 	'moduleName' => 'Admin',  // 代码生成到的模块
 	'withPrivilege' => FALSE,  // 是否生成相应权限的数据

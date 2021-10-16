@@ -1,6 +1,6 @@
 <?php
 return array(
-	'tableName' => 'member_level',    // 表名
+	'tableName' => 'p39_member_level',    // 表名
 	'tableCnName' => '会员级别',  // 表的中文名
 	'moduleName' => 'Admin',  // 代码生成到的模块
 	'withPrivilege' => FALSE,  // 是否生成相应权限的数据

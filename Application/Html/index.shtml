@@ -24,7 +24,7 @@
 			</div>
 			<div class="topnav_right fr">
 				<ul>
-					<li>您好，欢迎来到京西！[<a href="login.html">登录</a>] [<a href="register.html">免费注册</a>] </li>
+					<li id="logInfo"></li>
 					<li class="line">|</li>
 					<li>我的订单</li>
 					<li class="line">|</li>
@@ -117,12 +117,12 @@
 			<div class="cart fl">
 				<dl>
 					<dt>
-						<a href="">去购物车结算</a>
+						<a id="cart_list" href="/index.php/Home/Cart/lst.html">去购物车结算</a>
 						<b></b>
 					</dt>
 					<dd>
-						<div class="prompt">
-							购物车中还没有商品，赶紧选购吧！
+						<div class="prompt" id="cart_div_list">
+							<img src="/Public/Home/images/loading.gif" />
 						</div>
 					</dd>
 				</dl>
@@ -185,6 +185,18 @@
 						<div class="cat_detail none">
 														<dl class="dl_1st">
 								<dt><a href="">iphone</a></dt>
+								<dd>
+														
+								</dd>
+							</dl>
+														<dl >
+								<dt><a href="">手机配件</a></dt>
+								<dd>
+														
+								</dd>
+							</dl>
+														<dl >
+								<dt><a href="">摄影摄像</a></dt>
 								<dd>
 														
 								</dd>
@@ -269,6 +281,30 @@
 	<!-- 头部 end-->
 
 	<div style="clear:both;"></div>
+	
+<script>
+var picView = "http://www.39.com/Public/Uploads/";
+$("#cart_list").mouseover(function(){
+	$.ajax({
+		type : "GET",
+		url : "/index.php/Home/Cart/ajaxCartList.html",
+		dataType : "json",
+		success : function(data)
+		{
+			// 拼出HTML放到页中
+			var html = "<table>";
+			$(data).each(function(k,v){
+				html += "<tr>";
+				html += '<td><img width="50" src="'+picView+v.mid_logo+'" /></td>';
+				html += '<td>'+v.goods_name+'</td>';
+				html += '</tr>';
+			});
+			html += "</table>";
+			$("#cart_div_list").html(html);
+		}
+	});
+});
+</script>
 
 <!-- 综合区域 start 包括幻灯展示，商城快报 -->
 	<div class="colligate w1210 bc mt10">
@@ -419,7 +455,7 @@
 							<dl>
 								<dt><a href="/index.php/Home/Index/goods/id/7.html"><img   src='http://www.39.com/Public/Uploads/Goods/2015-10-19/thumb_2_56243bebac574.jpg' /></a></dt>
 								<dd><a href="/index.php/Home/Index/goods/id/7.html">商品属性测试</a></dd>
-								<dd><span>售价：</span><strong> ￥99.00元</strong></dd>
+								<dd><span>售价：</span><strong> ￥101.00元</strong></dd>
 							</dl>
 						</li>
 											</ul>	
@@ -433,7 +469,7 @@
 							<dl>
 								<dt><a href="/index.php/Home/Index/goods/id/4.html"><img   src='http://www.39.com/Public/Uploads/Goods/2015-10-16/thumb_2_562068ae6c614.jpg' /></a></dt>
 								<dd><a href="/index.php/Home/Index/goods/id/4.html">新的联想商品</a></dd>
-								<dd><span>售价：</span><strong> ￥0.00元</strong></dd>
+								<dd><span>售价：</span><strong> ￥333.00元</strong></dd>
 							</dl>
 						</li>
 											</ul>
@@ -454,7 +490,7 @@
 							<dl>
 								<dt><a href="/index.php/Home/Index/goods/id/4.html"><img   src='http://www.39.com/Public/Uploads/Goods/2015-10-16/thumb_2_562068ae6c614.jpg' /></a></dt>
 								<dd><a href="/index.php/Home/Index/goods/id/4.html">新的联想商品</a></dd>
-								<dd><span>售价：</span><strong> ￥0.00元</strong></dd>
+								<dd><span>售价：</span><strong> ￥333.00元</strong></dd>
 							</dl>
 						</li>
 												<li>
@@ -482,7 +518,7 @@
 							<dl>
 								<dt><a href="/index.php/Home/Index/goods/id/4.html"><img   src='http://www.39.com/Public/Uploads/Goods/2015-10-16/thumb_2_562068ae6c614.jpg' /></a></dt>
 								<dd><a href="/index.php/Home/Index/goods/id/4.html">新的联想商品</a></dd>
-								<dd><span>售价：</span><strong> ￥0.00元</strong></dd>
+								<dd><span>售价：</span><strong> ￥333.00元</strong></dd>
 							</dl>
 						</li>
 											</ul>
@@ -589,7 +625,7 @@
 								<dl>
 									<dt><a href="/index.php/Home/Index/goods/id/4.html"><img   src='http://www.39.com/Public/Uploads/Goods/2015-10-16/thumb_2_562068ae6c614.jpg' /></a></dt>
 									<dd><a href="/index.php/Home/Index/goods/id/4.html">新的联想商品</a></dd>
-									<dd><span>售价：</span> <strong>￥0.00元</strong></dd>
+									<dd><span>售价：</span> <strong>￥333.00元</strong></dd>
 								</dl>
 							</li>
 														<li>
@@ -611,7 +647,7 @@
 								<dl>
 									<dt><a href="/index.php/Home/Index/goods/id/4.html"><img   src='http://www.39.com/Public/Uploads/Goods/2015-10-16/thumb_2_562068ae6c614.jpg' /></a></dt>
 									<dd><a href="/index.php/Home/Index/goods/id/4.html">新的联想商品</a></dd>
-									<dd><span>售价：</span> <strong>￥0.00元</strong></dd>
+									<dd><span>售价：</span> <strong>￥333.00元</strong></dd>
 								</dl>
 							</li>
 													</ul>
@@ -910,3 +946,20 @@
 
 </body>
 </html>
+
+<script>
+// 判断登录状态 
+$.ajax({
+	type : "GET",
+	url : "/index.php/Home/Member/ajaxChkLogin.html",
+	dataType : "json",
+	success : function(data)
+	{
+		if(data.login == 1)
+			var li = '您好，'+data.username+' [<a href="/index.php/Home/Member/logout.html">退出</a>]';
+		else
+			var li = '您好，欢迎来到京西！[<a href="/index.php/Home/Member/login.html">登录</a>] [<a href="/index.php/Home/Member/regist.html">免费注册</a>]'
+		$("#logInfo").html(li);
+	}
+});
+</script>
