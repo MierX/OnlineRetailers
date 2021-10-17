@@ -34,7 +34,16 @@ class MemberController extends Controller
     		{
     			if($model->login())
     			{
-    				$this->success('登录成功！', U('/'));
+    				// 默认跳转地址
+    				$returnUrl = U('/');  
+    				// 如果session中有一个要跳转的地址就跳过去
+    				$ru = session('returnUrl');
+    				if($ru)
+    				{
+    					session('returnUrl', null);
+    					$returnUrl = $ru;
+    				}
+    				$this->success('登录成功！',$returnUrl);
     				exit;
     			}
     		}

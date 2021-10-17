@@ -1,5 +1,14 @@
 <?php
 /**
+ * 为一个定单生成支付宝支付按钮
+ *
+ * @param unknown_type $orderId
+ */
+function makeAlipayBtn($orderId, $btnName = '去支付宝支付')
+{
+	return require('./alipay/alipayapi.php');
+}
+/**
  * 使用一个表中的数据制作下拉框
  *
  */

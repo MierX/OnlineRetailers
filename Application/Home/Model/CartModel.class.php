@@ -166,6 +166,13 @@ class CartModel extends Model
 		}
 		return $data;
 	}
+	// 清空购物车
+	public function clear()
+	{
+		$this->where(array(
+			'member_id' => array('eq', session('m_id')),
+		))->delete();
+	}
 }
 
 
