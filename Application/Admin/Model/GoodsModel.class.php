@@ -45,6 +45,16 @@ class GoodsModel extends Model
 	protected function _before_update(&$data, $option)
 	{
 		$id = $option['where']['id'];  // 要修改的商品的ID
+		
+		// 标记商品被修改了需要重新创建索引
+		$data['is_updated'] = 1;
+		// 设置sphinx中的这条记录的is_updated属性为1
+		require('./sphinxapi.php');
+    	$sph = new \SphinxClient();
+    	$sph->SetServer('localhost', 9312);
+    	// 意思：把 id=$id 这件商品的 is_updated 属性更新成1
+    	$sph->UpdateAttributes('goods', array('is_updated'), array($id=>array(1)));
+		
 		/************ 修改商品属性 *****************/
 		$gaid = I('post.goods_attr_id');
 		$attrValue = I('post.attr_value');

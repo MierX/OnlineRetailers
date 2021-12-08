@@ -12,7 +12,13 @@
 	<!-- 登录主体部分start -->
 	<div class="login w990 bc mt10 regist">
 		<div class="login_hd">
-			<h2>用户注册</h2>
+			<h2>
+			<?php if(isset($_SESSION['openid'])): ?>
+				如果您还没有账号请先注册一个账号然后完成QQ的绑定
+			<?php else: ?>
+				用户注册
+			<?php endif; ?>
+			</h2>
 			<b></b>
 		</div>
 		<div class="login_bd">

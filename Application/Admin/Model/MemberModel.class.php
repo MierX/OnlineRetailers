@@ -29,11 +29,12 @@ class MemberModel extends Model
 	    $verify = new \Think\Verify();
 	    return $verify->check($code, $id);
 	}
-	public function login()
+	public function login($needPassword = TRUE)
 	{
 		// 从模型中获取用户名和密码
 		$username = $this->username;
-		$password = $this->password;
+		if($needPassword)
+			$password = $this->password;
 		// 先查询这个用户名是否存在
 		$user = $this->field('id,username,password,jifen')
 		->where(array(
@@ -41,27 +42,55 @@ class MemberModel extends Model
 		))->find();
 		if($user)
 		{
-			if($user['password'] == md5($password))
+			if($needPassword)
 			{
-				// 登录成功存session
-				session('m_id', $user['id']);
-				session('m_username', $user['username']);
-				// 计算当前会员级别ID并存SESSION
-				$mlModel = D('member_level');
-				$levelId = $mlModel->field('id')->where(array(
-					'jifen_bottom' => array('elt', $user['jifen']),
-					'jifen_top' => array('egt', $user['jifen']),
-				))->find();
-				session('level_id', $levelId['id']);
-				// move CartData in cart to db
-				$cartModel = D('Home/Cart');
-				$cartModel->moveDataToDb();
-				return TRUE;
+				if($user['password'] == md5($password))
+				{
+					// 如果是QQ登录就绑定openid
+					if(isset($_SESSION['openid']))
+					{
+						$this->where(array('id'=>$user['id']))->setField('openid', $_SESSION['openid']);
+						unset($_SESSION['openid']);
+					}
+					// 登录成功存session
+					session('m_id', $user['id']);
+					session('m_username', $user['username']);
+					session('face', '/Public/Home/images/user1.gif');
+					// 计算当前会员级别ID并存SESSION
+					$mlModel = D('member_level');
+					$levelId = $mlModel->field('id')->where(array(
+						'jifen_bottom' => array('elt', $user['jifen']),
+						'jifen_top' => array('egt', $user['jifen']),
+					))->find();
+					session('level_id', $levelId['id']);
+					// move CartData in cart to db
+					$cartModel = D('Home/Cart');
+					$cartModel->moveDataToDb();
+					return TRUE;
+				}
+				else 
+				{
+					$this->error = '密码不正确！';
+					return FALSE;
+				}
 			}
 			else 
 			{
-				$this->error = '密码不正确！';
-				return FALSE;
+					// 登录成功存session
+					session('m_id', $user['id']);
+					session('m_username', $user['username']);
+					session('face', '/Public/Home/images/user1.gif');
+					// 计算当前会员级别ID并存SESSION
+					$mlModel = D('member_level');
+					$levelId = $mlModel->field('id')->where(array(
+						'jifen_bottom' => array('elt', $user['jifen']),
+						'jifen_top' => array('egt', $user['jifen']),
+					))->find();
+					session('level_id', $levelId['id']);
+					// move CartData in cart to db
+					$cartModel = D('Home/Cart');
+					$cartModel->moveDataToDb();
+					return TRUE;
 			}
 		}
 		else 
@@ -73,6 +102,12 @@ class MemberModel extends Model
 	protected function _before_insert(&$data, $option)
 	{
 		$data['password'] = md5($data['password']);
+		// 如果是QQ登录就绑定openid
+		if(isset($_SESSION['openid']))
+		{
+			$data['openid'] = $_SESSION['openid'];
+			unset($_SESSION['openid']);
+		}
 	}
 	
 	public function logout()
@@ -80,4 +115,4 @@ class MemberModel extends Model
 		session(null);
 	}
 	/************************************ 其他方法 ********************************************/
-}
+} 

@@ -306,7 +306,6 @@ $("#cart_list").mouseover(function(){
 	});
 });
 </script>
-
 <!-- 综合区域 start 包括幻灯展示，商城快报 -->
 	<div class="colligate w1210 bc mt10">
 		<!-- 幻灯区域 start -->
@@ -612,7 +611,7 @@ $("#cart_list").mouseover(function(){
 								<dl>
 									<dt><a href="/index.php/Home/Index/goods/id/3.html"><img   src='http://www.39.com/Public/Uploads/Goods/2015-10-16/thumb_2_5620462741c29.jpg' /></a></dt>
 									<dd><a href="/index.php/Home/Index/goods/id/3.html">测试相册</a></dd>
-									<dd><span>售价：</span> <strong>￥222.00元</strong></dd>
+									<dd><span>售价：</span> <strong>￥1.00元</strong></dd>
 								</dl>
 							</li>
 														<li>
@@ -661,6 +660,7 @@ $("#cart_list").mouseover(function(){
 					<ul>
 												<li><a href=""><img   src='http://www.39.com/Public/Uploads/Brand/2015-10-13/561cc92ba6c33.jpg' /></a></li>
 												<li><a href=""><img   src='http://www.39.com/Public/Uploads/Brand/2015-10-21/562742b307bf5.gif' /></a></li>
+												<li><a href=""><img   src='http://www.39.com/Public/Uploads/' /></a></li>
 											</ul>
 				</div>
 			</div>
@@ -723,7 +723,7 @@ $("#cart_list").mouseover(function(){
 								<dl>
 									<dt><a href="/index.php/Home/Index/goods/id/3.html"><img   src='http://www.39.com/Public/Uploads/Goods/2015-10-16/thumb_2_5620462741c29.jpg' /></a></dt>
 									<dd><a href="/index.php/Home/Index/goods/id/3.html">测试相册</a></dd>
-									<dd><span>售价：</span> <strong>￥222.00元</strong></dd>
+									<dd><span>售价：</span> <strong>￥1.00元</strong></dd>
 								</dl>
 							</li>
 													</ul>

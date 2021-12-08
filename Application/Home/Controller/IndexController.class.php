@@ -12,25 +12,28 @@ class IndexController extends NavController
 	public function displayHistory()
 	{
 		$id = I('get.id');
-		// 先从COOKIE中取出浏览历史的ID数组
-		$data = isset($_COOKIE['display_history']) ? unserialize($_COOKIE['display_history']) : array();
-		// 把最新浏览的这件商品放到数组中的第一个位置上
-		array_unshift($data, $id);
-		// 去重
-		$data =	array_unique($data);
-		// 只取数组中前6个
-		if(count($data) > 6)
-			$data = array_slice($data, 0, 6);
-		// 数组存回COOKIE
-		setcookie('display_history', serialize($data), time() + 30 * 86400, '/');
-		// 再根据商品的ID取出商品的详细信息
-		$goodsModel = D('Goods');
-		$data = implode(',', $data);
-		$gData = $goodsModel->field('id,mid_logo,goods_name')->where(array(
-			'id' => array('in', $data),
-			'is_on_sale' => array('eq', '是'),
-		))->order("FIELD(id,$data)")->select();
-		echo json_encode($gData);
+		if($id)
+		{
+			// 先从COOKIE中取出浏览历史的ID数组
+			$data = isset($_COOKIE['display_history']) ? unserialize($_COOKIE['display_history']) : array();
+			// 把最新浏览的这件商品放到数组中的第一个位置上
+			array_unshift($data, $id);
+			// 去重
+			$data =	array_unique($data);
+			// 只取数组中前6个
+			if(count($data) > 6)
+				$data = array_slice($data, 0, 6);
+			// 数组存回COOKIE
+			setcookie('display_history', serialize($data), time() + 30 * 86400, '/');
+			// 再根据商品的ID取出商品的详细信息
+			$goodsModel = D('Goods');
+			$data = implode(',', $data);
+			$gData = $goodsModel->field('id,mid_logo,goods_name')->where(array(
+				'id' => array('in', $data),
+				'is_on_sale' => array('eq', '是'),
+			))->order("FIELD(id,$data)")->select();
+			echo json_encode($gData);
+		}
 	}
 	// 首页
     public function index()

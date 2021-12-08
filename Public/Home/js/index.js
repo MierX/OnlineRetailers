@@ -23,8 +23,8 @@ $(function(){
 	//各楼层区域切换
 	$(".goodslist h2 span").mouseover(function(){
 		$(this).addClass("on").siblings().removeClass("on");
-		$(".goodslist_wrap div").hide().eq($(this).index()).show();
-
+		// 原来错误的：$(".goodslist_wrap div").hide().eq($(this).index()).show();
+		$(this).parent().next(".goodslist_wrap").find(" div").hide().eq($(this).index()).show();
 	});
 
 	//首页幻灯片效果
