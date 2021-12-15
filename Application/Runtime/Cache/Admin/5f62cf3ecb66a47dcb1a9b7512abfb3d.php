@@ -1,10 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>ECSHOP Menu</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link href="__PUBLIC__/Admin/Styles/general.css" rel="stylesheet" type="text/css"/>
+    <link href="/Public/Admin/Styles/general.css" rel="stylesheet" type="text/css"/>
 
     <style type="text/css">
         body {
@@ -92,17 +92,17 @@
         }
 
         .explode {
-            background: url(__PUBLIC__/Admin/Images/menu_minus.gif) no-repeat 0px 3px;
+            background: url(/Public/Admin/Images/menu_minus.gif) no-repeat 0px 3px;
             font-weight: bold;
         }
 
         .collapse {
-            background: url(__PUBLIC__/Admin/Images/menu_plus.gif) no-repeat 0px 3px;
+            background: url(/Public/Admin/Images/menu_plus.gif) no-repeat 0px 3px;
             font-weight: bold;
         }
 
         .menu-item {
-            background: url(__PUBLIC__/Admin/Images/menu_arrow.gif) no-repeat 0px 3px;
+            background: url(/Public/Admin/Images/menu_arrow.gif) no-repeat 0px 3px;
             font-weight: normal;
         }
 
@@ -133,7 +133,7 @@
     <p>
         <span style="float:right; padding:3px 5px;">
             <a href="javascript:toggleCollapse();">
-                <img id="toggleImg" src="__PUBLIC__/Admin/Images/menu_minus.gif" width="9" height="9" border="0" alt="闭合"/>
+                <img id="toggleImg" src="/Public/Admin/Images/menu_minus.gif" width="9" height="9" border="0" alt="闭合"/>
             </a>
         </span>
         <span class="tab-front" id="menu-tab">菜单</span>
@@ -143,9 +143,7 @@
     <div id="menu-list">
         <ul id="menu-ul">
             <?php
-        $priModel = D('privilege');
-        $btns = $priModel->getBtns();
-            foreach ($btns as $k => $v): ?>
+ $priModel = D('privilege'); $btns = $priModel->getBtns(); foreach ($btns as $k => $v): ?>
             <li class="explode" key="02_cat_and_goods" name="menu">
                 <?php echo $v['pri_name']; ?>
                 <ul>
@@ -164,9 +162,9 @@
         <div id="help-content"></div>
     </div>
 </div>
-<script type="text/javascript" src="__PUBLIC__/Admin/Js/global.js"></script>
-<script type="text/javascript" src="__PUBLIC__/Admin/Js/utils.js"></script>
-<script type="text/javascript" src="__PUBLIC__/Admin/Js/transport.js"></script>
+<script type="text/javascript" src="/Public/Admin/Js/global.js"></script>
+<script type="text/javascript" src="/Public/Admin/Js/utils.js"></script>
+<script type="text/javascript" src="/Public/Admin/Js/transport.js"></script>
 <script language="JavaScript">
     var collapse_all = "闭合";
     var expand_all = "展开";
@@ -187,7 +185,7 @@
             }
         }
         collapse = !collapse;
-        document.getElementById('toggleImg').src = collapse ? '__PUBLIC__/Admin/Images/menu_minus.gif' : '__PUBLIC__/Admin/Images/menu_plus.gif';
+        document.getElementById('toggleImg').src = collapse ? '/Public/Admin/Images/menu_minus.gif' : '/Public/Admin/Images/menu_plus.gif';
         document.getElementById('toggleImg').alt = collapse ? collapse_all : expand_all;
     }
 
@@ -307,7 +305,7 @@
                         }
                     }
                 }
-                document.getElementById('toggleImg').src = collapse ? '__PUBLIC__/Admin/Images/menu_minus.gif' : '__PUBLIC__/Admin/Images/menu_plus.gif';
+                document.getElementById('toggleImg').src = collapse ? '/Public/Admin/Images/menu_minus.gif' : '/Public/Admin/Images/menu_plus.gif';
                 document.getElementById('toggleImg').alt = collapse ? collapse_all : expand_all;
             }
         }

@@ -1,7 +1,7 @@
 <?php
 return array(
     'DB_TYPE' => 'mysql',     // mysql,mysqli,pdo
-    'DB_DSN' => 'mysql:host=localhost;dbname=or;charset=utf8',
+//    'DB_DSN' => 'mysql:host=localhost;dbname=or;charset=utf8',
     'DB_USER' => 'root',      // 用户名
     'DB_PWD' => '123456',          // 密码
     'DB_PORT' => '3306',        // 端口
